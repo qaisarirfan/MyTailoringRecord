@@ -87,7 +87,7 @@ const reducers = {
     };
   },
 
-  [LOGOUT]() {
+  [LOGOUT + LOADING]() {
     return initialState;
   },
 

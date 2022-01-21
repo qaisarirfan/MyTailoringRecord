@@ -1,9 +1,8 @@
 import get from 'lodash/get';
 import { LOADING, LOADED, ERROR } from './actions';
-import { selectAuthToken } from '../reducers/authentication/selectors';
-import { CLIENTS, errorMessage } from '../../configure/clients';
+import { CLIENTS, errorMessage } from '../../config/clients';
 
-const apiClients = (clients) => (store) => (next) => (action) => {
+const apiClients = clients => store => next => action => {
   const makeAction = (status, data) => {
     const newAction = { ...action, type: action.type + status, ...data };
     delete newAction.request;
@@ -11,7 +10,7 @@ const apiClients = (clients) => (store) => (next) => (action) => {
   };
 
   const addTokenToRequest = (state, request) => {
-    const authToken = selectAuthToken(state);
+    const authToken = null;
     return authToken
       ? {
           ...request,
@@ -40,35 +39,44 @@ const apiClients = (clients) => (store) => (next) => (action) => {
   const request = addTokenToRequest(store.getState(), action.request);
 
   let requestTo;
+  console.log(clientName, request.arguments);
   if (clientName === CLIENTS.FIREBASE_AUTH) {
-    requestTo = clients[clientName].client[request.method](
-      ...request.arguments,
-    );
+    if (request?.arguments) {
+      requestTo = clients[clientName].client[request.method](
+        ...request.arguments,
+      );
+    } else {
+      requestTo = clients[clientName].client[request.method]();
+    }
   } else {
     requestTo = clients[clientName].client.request(request);
   }
 
   return requestTo
-    .then((result) => {
-      const errors = get(result, 'data.errors', []);
-      const payload = { result: result.data, originalPayload: action.payload };
-      if (errors) {
-        payload.error = {
-          result: errors,
-        };
-      }
-      next(makeAction(LOADED, { payload }));
-      if (action.callback) {
-        const { dispatch, getState } = store;
-        action.callback(dispatch, getState, payload);
+    .then(result => {
+      if (clientName === CLIENTS.FIREBASE_AUTH) {
+        next(makeAction(LOADED, { payload: { result } }));
+      } else {
+        const errors = get(result, 'data.errors');
+        const payload = { result: result.data };
+        if (errors) {
+          payload.error = {
+            result: errors,
+          };
+        }
+        next(makeAction(LOADED, { payload }));
+        if (action.callback) {
+          const { dispatch, getState } = store;
+          action.callback(dispatch, getState, payload);
+        }
       }
     })
-    .catch((error) => {
+    .catch(error => {
+      console.log(error);
       next(
         makeAction(ERROR, {
           payload: {
             result: errorMessage(error),
-            originalPayload: action.payload,
           },
         }),
       );

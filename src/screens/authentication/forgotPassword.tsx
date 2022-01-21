@@ -2,9 +2,10 @@ import React from 'react';
 import { Box, Heading, ScrollView, VStack, Center, Text } from 'native-base';
 import { useDispatch } from 'react-redux';
 
-import ForgotPasswordForm from '../components/forms/forgotPassword';
+import ForgotPasswordForm from '../../components/forms/forgotPassword';
 
-import { register } from '../redux/reducers/authentication/actionCreators';
+import { register } from '../../redux/reducers/authentication/actionCreators';
+import { StyleSheet } from 'react-native';
 
 export const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -14,13 +15,10 @@ export const ForgotPassword = () => {
   };
 
   return (
-    <Box safeArea py="8" style={{ display: 'flex', flex: 1 }}>
+    <Box safeArea py="8" style={Styles.container}>
       <ScrollView
         keyboardDismissMode="interactive"
-        _contentContainerStyle={{
-          flex: 1,
-          justifyContent: 'center',
-        }}
+        _contentContainerStyle={Styles.scrollView}
       >
         <VStack alignItems="center">
           <Center w="90%">
@@ -38,5 +36,13 @@ export const ForgotPassword = () => {
     </Box>
   );
 };
+
+const Styles = StyleSheet.create({
+  container: { display: 'flex', flex: 1 },
+  scrollView: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+});
 
 export default ForgotPassword;

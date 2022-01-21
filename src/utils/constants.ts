@@ -12,6 +12,10 @@ export const ERROR_CODES = {
   'auth/operation-not-allowed':
     'Enable email/password accounts in the Firebase Console, under the Auth tab.',
   'auth/weak-password': 'The password is too weak.',
+  'auth/internal-error': 'An internal error has occurred, please try again.',
+  'auth/configuration-not': 'An internal error has occurred, please try again.',
+  'auth/network-request-failed':
+    'A network error has occurred, please try again.',
 };
 
 export const constants = Object.freeze({

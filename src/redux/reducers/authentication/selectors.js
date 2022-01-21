@@ -1,16 +1,28 @@
 import get from 'lodash/get';
+import { createSelector } from 'reselect';
 import { REDUCERS_NAME } from '../../../utils/constants';
 
 const { authentication } = REDUCERS_NAME;
 
-export const selectLoginIsLoading = state =>
+export const loginLoader = state =>
   get(state, `${authentication}.login.loader`);
-export const selectLoginData = state =>
-  get(state, `${authentication}.login.data`);
-export const selectAuthToken = state =>
-  get(state, `${authentication}.login.data.access_token`);
-export const selectLoginError = state =>
-  get(state, `${authentication}.login.error`);
+export const loginData = state => get(state, `${authentication}.login.data`);
+export const loginError = state => get(state, `${authentication}.login.error`);
+export const userData = createSelector(loginData, data => {
+  const uid = get(data, 'result.user.uid');
+  const email = get(data, 'result.user.email');
+  const refreshToken = get(data, 'result.user.refreshToken');
+  const displayName = get(data, 'result.user.displayName');
+  const photoURL = get(data, 'result.user.photoURL');
+
+  return {
+    displayName,
+    email,
+    photoURL,
+    refreshToken,
+    uid,
+  };
+});
 
 export const registerLoader = state =>
   get(state, `${authentication}.register.loader`);

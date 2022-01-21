@@ -5,7 +5,7 @@ import createFilter from 'redux-persist-transform-filter';
 import persistCombineReducers from 'redux-persist/lib/persistCombineReducers';
 import thunk from 'redux-thunk';
 
-import clients from '../configure/clients';
+import clients from '../config/clients';
 import ReducerRegistry from './ReducerRegistry';
 import createApiClient from './middleware/apiClients';
 
@@ -62,6 +62,7 @@ const storageConfig = {
 };
 
 const configureStore = (initialState = {}) => {
+  AsyncStorage.getAllKeys(console.log);
   // Add default reducers
   ReducerRegistry.register(REDUCERS_NAME.authentication, authReducer);
   ReducerRegistry.register(REDUCERS_NAME.firstLoad, firstLoadReducer);
