@@ -57,7 +57,9 @@ buck-out/
 *.jsbundle
 
 # CocoaPods
-/ios/Pods/
+Pods/
 
-ios/GoogleService-Info.plist
-android/app/google-services.json
+GoogleService-Info.plist
+google-services.json
+debug/
+release/

@@ -8,9 +8,8 @@ export function register() {
     client: CLIENTS.FIREBASE_AUTH,
     request: {
       method: 'createUserWithEmailAndPassword',
-      arguments,
+      args: arguments,
     },
-    callback: 'onAuthStateChanged',
   };
 }
 
@@ -20,9 +19,8 @@ export function login() {
     client: CLIENTS.FIREBASE_AUTH,
     request: {
       method: 'signInWithEmailAndPassword',
-      arguments,
+      args: arguments,
     },
-    callback: 'onAuthStateChanged',
   };
 }
 
