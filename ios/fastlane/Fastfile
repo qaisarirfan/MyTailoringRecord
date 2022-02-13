@@ -1,0 +1,27 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "My awesome app"
+  lane :distribute do
+      build_app(workspace: "MyTailoringRecord.xcworkspace", scheme: "Production", silent: true)
+      firebase_app_distribution(
+          app: "1:510814077673:ios:cc77cb9db733ff02986678",
+          release_notes: "Lots of amazing new features to test out!"
+      )
+  end
+end
