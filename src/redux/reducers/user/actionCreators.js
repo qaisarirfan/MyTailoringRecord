@@ -5,7 +5,7 @@ import {
   GET_FAVOURITES,
   SET_MANAGER_TUTORIAL_SEEN,
 } from './actions';
-import { selectPolicyData } from './selectors';
+import {selectPolicyData} from './selectors';
 
 export function createLoadUserAction(courseId) {
   return {
@@ -31,7 +31,7 @@ export function createUpdateUserAction(courseId, data) {
 export function createAcceptPolicyAction() {
   return (dispatch, getState) => {
     const state = getState();
-    const { requiredPolicy } = selectPolicyData(state);
+    const {requiredPolicy} = selectPolicyData(state);
 
     const data = {
       policy_version_accepted: requiredPolicy,
@@ -72,7 +72,7 @@ export function createSetManagerTutorialSeenAction() {
     request: {
       method: 'post',
       url: 'manager/tutorial',
-      data: { tutorial_seen: true },
+      data: {tutorial_seen: true},
     },
   };
 }

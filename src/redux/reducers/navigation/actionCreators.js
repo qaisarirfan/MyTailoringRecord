@@ -1,4 +1,4 @@
-import { SET_NAVIGATION } from './actions';
+import {SET_NAVIGATION} from './actions';
 
 export function createNavigationAction(payload) {
   return {

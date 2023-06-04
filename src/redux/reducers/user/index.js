@@ -1,6 +1,6 @@
-import { createReducer } from '../../../utils/utility';
-import { ERROR, LOADED, LOADING } from '../../middleware/actions';
-import { LOGOUT } from '../authentication/actions';
+import {createReducer} from '../../../utils/utility';
+import {ERROR, LOADED, LOADING} from '../../middleware/actions';
+import {LOGOUT} from '../authentication/actions';
 import {
   GET_FAVOURITES,
   IMAGE_UPDATE,
@@ -61,7 +61,7 @@ const reducers = {
     };
   },
   [GET_FAVOURITES + LOADING](state) {
-    return { ...state, isLoading: true, loadingError: null };
+    return {...state, isLoading: true, loadingError: null};
   },
   [GET_FAVOURITES + LOADED](state, payload) {
     return {
@@ -72,7 +72,7 @@ const reducers = {
     };
   },
   [GET_FAVOURITES + ERROR](state, payload) {
-    return { ...state, isLoading: false, loadingError: payload.result };
+    return {...state, isLoading: false, loadingError: payload.result};
   },
   [SET_MANAGER_TUTORIAL_SEEN + LOADED](state) {
     return {

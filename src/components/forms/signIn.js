@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { FormControl, Input, Button, Link, HStack, Text } from 'native-base';
-import { Formik } from 'formik';
-import { useSelector } from 'react-redux';
+import {FormControl, Input, Button, Link, HStack, Text} from 'native-base';
+import {Formik} from 'formik';
+import {useSelector} from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
-import { loginLoader } from '../../redux/reducers/authentication/selectors';
-import { useNavigation } from '@react-navigation/native';
+import {loginLoader} from '../../redux/reducers/authentication/selectors';
+import {useNavigation} from '@react-navigation/native';
 
-export const SignInForm = ({ email, password, onSubmit }) => {
+export const SignInForm = ({email, password, onSubmit}) => {
   const loader = useSelector(loginLoader);
 
   const navigation = useNavigation();
@@ -23,9 +23,8 @@ export const SignInForm = ({ email, password, onSubmit }) => {
         email: Yup.string().email('Invalid email address').required('Required'),
         password: Yup.string().required('Required'),
       })}
-      onSubmit={onSubmit}
-    >
-      {({ handleChange, handleBlur, handleSubmit, values, errors }) => {
+      onSubmit={onSubmit}>
+      {({handleChange, handleBlur, handleSubmit, values, errors}) => {
         return (
           <>
             <FormControl isInvalid={errors.email} isRequired>
@@ -37,7 +36,7 @@ export const SignInForm = ({ email, password, onSubmit }) => {
                 value={values.email}
                 isReadOnly={loader}
               />
-              <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
+              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
                 {errors.email}
               </FormControl.ErrorMessage>
             </FormControl>
@@ -50,7 +49,7 @@ export const SignInForm = ({ email, password, onSubmit }) => {
                 value={values.password}
                 isReadOnly={loader}
               />
-              <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
+              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
                 {errors.password}
               </FormControl.ErrorMessage>
             </FormControl>
@@ -62,8 +61,7 @@ export const SignInForm = ({ email, password, onSubmit }) => {
               }}
               alignSelf="flex-end"
               mt="1"
-              onPress={() => navigation.navigate('ForgotPassword')}
-            >
+              onPress={() => navigation.navigate('ForgotPassword')}>
               Forget Password?
             </Link>
             <Button
@@ -72,8 +70,7 @@ export const SignInForm = ({ email, password, onSubmit }) => {
               onPress={handleSubmit}
               isDisabled={loader}
               isLoading={loader}
-              isLoadingText="Submitting"
-            >
+              isLoadingText="Submitting">
               Sign in
             </Button>
 
@@ -83,8 +80,7 @@ export const SignInForm = ({ email, password, onSubmit }) => {
                 color="coolGray.600"
                 _dark={{
                   color: 'warmGray.200',
-                }}
-              >
+                }}>
                 I'm a new user.{' '}
               </Text>
               <Link
@@ -93,8 +89,7 @@ export const SignInForm = ({ email, password, onSubmit }) => {
                   fontWeight: 'medium',
                   fontSize: 'sm',
                 }}
-                onPress={() => navigation.navigate('SignUp')}
-              >
+                onPress={() => navigation.navigate('SignUp')}>
                 Sign Up
               </Link>
             </HStack>

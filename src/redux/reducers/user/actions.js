@@ -1,7 +1,7 @@
-import { REDUCERS_NAME } from '../../../utils/constants';
-import { createActionName } from '../../../utils/utility';
+import {REDUCERS_NAME} from '../../../utils/constants';
+import {createActionName} from '../../../utils/utility';
 
-const { user } = REDUCERS_NAME;
+const {user} = REDUCERS_NAME;
 
 export const USER = createActionName(user, 'USER');
 export const USER_UPDATE = createActionName(user, 'USER_UPDATE');

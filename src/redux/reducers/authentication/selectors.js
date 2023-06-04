@@ -1,8 +1,8 @@
 import get from 'lodash/get';
-import { createSelector } from 'reselect';
-import { REDUCERS_NAME } from '../../../utils/constants';
+import {createSelector} from 'reselect';
+import {REDUCERS_NAME} from '../../../utils/constants';
 
-const { authentication } = REDUCERS_NAME;
+const {authentication} = REDUCERS_NAME;
 
 export const loginLoader = state =>
   get(state, `${authentication}.login.loader`);

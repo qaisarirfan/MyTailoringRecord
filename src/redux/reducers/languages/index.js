@@ -1,5 +1,5 @@
-import { createReducer } from '../../../utils/utility';
-import { SET_LANGUAGE } from './actions';
+import {createReducer} from '../../../utils/utility';
+import {SET_LANGUAGE} from './actions';
 
 // languages initial state
 export const initialState = {

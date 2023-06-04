@@ -1,9 +1,8 @@
-import auth from '@react-native-firebase/auth';
 import axios from 'axios';
 
-import { constants, ERROR_CODES } from '../utils/constants';
+import {constants, ERROR_CODES} from '../utils/constants';
 
-export const errorMessage = ({ request, message, code }) => {
+export const errorMessage = ({request, message, code}) => {
   let msg = '';
   if (request) {
     if (message === 'Network Error') {
@@ -27,7 +26,7 @@ export const CLIENTS = {
   FIREBASE_AUTH: 'FIREBASE_AUTH',
 };
 
-export const configureClients = ({ baseURL, apiURL, googleMapsURL }) => ({
+export const configureClients = ({baseURL, apiURL, googleMapsURL}) => ({
   default: {
     client: axios.create({
       baseURL,
@@ -69,9 +68,6 @@ export const configureClients = ({ baseURL, apiURL, googleMapsURL }) => ({
         },
       },
     }),
-  },
-  [CLIENTS.FIREBASE_AUTH]: {
-    client: auth(),
   },
 });
 

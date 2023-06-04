@@ -1,23 +1,15 @@
-import React, { useEffect } from 'react';
-import {
-  Box,
-  Heading,
-  ScrollView,
-  VStack,
-  Center,
-  useToast,
-} from 'native-base';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import {Box, Heading, ScrollView, VStack, Center} from 'native-base';
+import {useDispatch, useSelector} from 'react-redux';
 
 import SignUpForm from '../../components/forms/signUp';
 
-import { register } from '../../redux/reducers/authentication/actionCreators';
-import { StyleSheet } from 'react-native';
-import { registerError } from '../../redux/reducers/authentication/selectors';
+import {register} from '../../redux/reducers/authentication/actionCreators';
+import {StyleSheet} from 'react-native';
+import {registerError} from '../../redux/reducers/authentication/selectors';
 
 export const SignUp = () => {
   const dispatch = useDispatch();
-  const toast = useToast();
   const error = useSelector(registerError);
 
   console.log(error?.result);
@@ -36,8 +28,7 @@ export const SignUp = () => {
     <Box safeArea py="8" style={Styles.container}>
       <ScrollView
         keyboardDismissMode="interactive"
-        _contentContainerStyle={Styles.scrollView}
-      >
+        _contentContainerStyle={Styles.scrollView}>
         <VStack alignItems="center">
           <Center w="90%">
             <Heading size="lg" color="coolGray.800" fontWeight="semibold">
@@ -50,8 +41,7 @@ export const SignUp = () => {
                 color: 'warmGray.200',
               }}
               fontWeight="medium"
-              size="xs"
-            >
+              size="xs">
               Sign up to continue!
             </Heading>
             <SignUpForm onSubmit={onSubmitHandler} />
@@ -63,7 +53,7 @@ export const SignUp = () => {
 };
 
 const Styles = StyleSheet.create({
-  container: { display: 'flex', flex: 1 },
+  container: {display: 'flex', flex: 1},
   scrollView: {
     flex: 1,
     justifyContent: 'center',

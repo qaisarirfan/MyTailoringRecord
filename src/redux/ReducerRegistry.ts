@@ -9,23 +9,20 @@ export class ReducerRegistry {
   reducers: object = {};
 
   getReducers() {
-    return { ...this.reducers };
+    return {...this.reducers};
   }
 
   register(
     name: string,
     reducer: {
-      (
-        state: object,
-        { type, payload }: { type: string; payload: object },
-      ): object;
+      (state: object, {type, payload}: {type: string; payload: object}): object;
     },
   ) {
     if (has(this.reducers, name)) {
       return;
     }
 
-    this.reducers = { ...this.reducers, [name]: reducer };
+    this.reducers = {...this.reducers, [name]: reducer};
 
     if (this.emitChange) {
       this.emitChange(this.getReducers());
