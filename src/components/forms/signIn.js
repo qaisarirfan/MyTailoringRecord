@@ -5,11 +5,11 @@ import {useSelector} from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
-import {loginLoader} from '../../redux/reducers/authentication/selectors';
+
 import {useNavigation} from '@react-navigation/native';
 
 export const SignInForm = ({email, password, onSubmit}) => {
-  const loader = useSelector(loginLoader);
+  const loader = useSelector(()=>null);
 
   const navigation = useNavigation();
 

@@ -5,11 +5,11 @@ import {useSelector} from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
-import {registerLoader} from '../../redux/reducers/authentication/selectors';
+
 import {useNavigation} from '@react-navigation/native';
 
 export const ForgotPasswordForm = ({email, password, onSubmit}) => {
-  const loader = useSelector(registerLoader);
+  const loader = useSelector(()=>null);
 
   const navigation = useNavigation();
 
