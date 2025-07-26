@@ -1,4 +1,5 @@
 import axios from 'axios';
+import auth from '@react-native-firebase/auth';
 
 import {constants, ERROR_CODES} from '../utils/constants';
 
@@ -68,6 +69,9 @@ export const configureClients = ({baseURL, apiURL, googleMapsURL}) => ({
         },
       },
     }),
+  },
+  [CLIENTS.FIREBASE_AUTH]: {
+    client: auth(),
   },
 });
 
