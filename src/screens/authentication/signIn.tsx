@@ -23,8 +23,8 @@ export const SignUp = () => {
   return (
     <Box safeArea py="8" style={Styles.container}>
       <ScrollView
-        keyboardDismissMode="interactive"
         _contentContainerStyle={Styles.scrollView}
+        keyboardDismissMode="interactive"
       >
         <VStack alignItems="center">
           <Center w="90%">

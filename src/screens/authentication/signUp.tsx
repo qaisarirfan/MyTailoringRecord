@@ -1,14 +1,26 @@
-import React from 'react';
-import { Box, Heading, ScrollView, VStack, Center } from 'native-base';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import {
+  Box,
+  Heading,
+  ScrollView,
+  VStack,
+  Center,
+  useToast,
+} from 'native-base';
+import { useDispatch, useSelector } from 'react-redux';
 
 import SignUpForm from '../../components/forms/signUp';
 
 import { register } from '../../redux/reducers/authentication/actionCreators';
 import { StyleSheet } from 'react-native';
+import { registerError } from '../../redux/reducers/authentication/selectors';
 
 export const SignUp = () => {
   const dispatch = useDispatch();
+  const toast = useToast();
+  const error = useSelector(registerError);
+
+  console.log(error?.result);
 
   const onSubmitHandler = ({
     email,

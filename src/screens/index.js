@@ -18,7 +18,13 @@ export default () => {
     <NavigationContainer>
       {!uid ? (
         <Stack.Navigator>
-          <Stack.Screen name="SignIn" component={SignIn} />
+          <Stack.Screen
+            name="SignIn"
+            component={SignIn}
+            options={{
+              animationTypeForReplace: !uid ? 'pop' : 'push',
+            }}
+          />
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         </Stack.Navigator>
