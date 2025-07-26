@@ -1,7 +1,7 @@
-import { REDUCERS_NAME } from '../../../utils/constants';
-import { createActionName } from '../../../utils/utility';
+import {REDUCERS_NAME} from '../../../utils/constants';
+import {createActionName} from '../../../utils/utility';
 
-const { firstLoad } = REDUCERS_NAME;
+const {firstLoad} = REDUCERS_NAME;
 
 // Actions
 export const LOAD = createActionName(firstLoad, 'LOAD');

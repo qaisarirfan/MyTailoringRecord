@@ -1,7 +1,7 @@
 import get from 'lodash/get';
-import { REDUCERS_NAME } from '../../../utils/constants';
+import {REDUCERS_NAME} from '../../../utils/constants';
 
-const { user } = REDUCERS_NAME;
+const {user} = REDUCERS_NAME;
 
 export const selectUser = state => get(state, `${user}.data`);
 export const selectIsLoading = state => get(state, `${user}.isLoading`);

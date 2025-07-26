@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { FormControl, Input, Button } from 'native-base';
-import { Formik } from 'formik';
-import { useSelector } from 'react-redux';
+import {FormControl, Input, Button} from 'native-base';
+import {Formik} from 'formik';
+import {useSelector} from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
-import { registerLoader } from '../../redux/reducers/authentication/selectors';
+import {registerLoader} from '../../redux/reducers/authentication/selectors';
 
 export const SignUpForm = ({
   email,
@@ -29,9 +29,8 @@ export const SignUpForm = ({
           .required('Required')
           .oneOf([Yup.ref('password'), null], 'Passwords must match'),
       })}
-      onSubmit={onSubmit}
-    >
-      {({ handleChange, handleBlur, handleSubmit, values, errors }) => {
+      onSubmit={onSubmit}>
+      {({handleChange, handleBlur, handleSubmit, values, errors}) => {
         return (
           <>
             <FormControl isInvalid={errors.email} isRequired>
@@ -43,7 +42,7 @@ export const SignUpForm = ({
                 value={values.email}
                 isReadOnly={loader}
               />
-              <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
+              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
                 {errors.email}
               </FormControl.ErrorMessage>
             </FormControl>
@@ -56,7 +55,7 @@ export const SignUpForm = ({
                 value={values.password}
                 isReadOnly={loader}
               />
-              <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
+              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
                 {errors.password}
               </FormControl.ErrorMessage>
             </FormControl>
@@ -69,7 +68,7 @@ export const SignUpForm = ({
                 value={values.passwordConfirmation}
                 isReadOnly={loader}
               />
-              <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
+              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
                 {errors.passwordConfirmation}
               </FormControl.ErrorMessage>
             </FormControl>
@@ -79,8 +78,7 @@ export const SignUpForm = ({
               onPress={handleSubmit}
               isDisabled={loader}
               isLoading={loader}
-              isLoadingText="Submitting"
-            >
+              isLoadingText="Submitting">
               Sign up
             </Button>
           </>

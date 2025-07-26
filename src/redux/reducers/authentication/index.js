@@ -1,6 +1,6 @@
-import { createReducer } from '../../../utils/utility';
-import { ERROR, LOADED, LOADING } from '../../middleware/actions';
-import { LOGIN, LOGOUT, REGISTER } from './actions';
+import {createReducer} from '../../../utils/utility';
+import {ERROR, LOADED, LOADING} from '../../middleware/actions';
+import {LOGIN, LOGOUT, REGISTER} from './actions';
 
 const initialState = {
   login: {

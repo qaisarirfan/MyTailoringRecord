@@ -1,5 +1,4 @@
-import { applyMiddleware, compose, createStore } from 'redux';
-import { logger } from 'redux-logger';
+import {applyMiddleware, compose, createStore} from 'redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import createFilter from 'redux-persist-transform-filter';
 import persistCombineReducers from 'redux-persist/lib/persistCombineReducers';
@@ -14,7 +13,7 @@ import userReducer from './reducers/user';
 import languagesReducer from './reducers/languages';
 import navigationReducer from './reducers/navigation';
 
-import { REDUCERS_NAME } from '../utils/constants';
+import {REDUCERS_NAME} from '../utils/constants';
 
 export const saveAuthFilter = createFilter(REDUCERS_NAME.authentication, [
   'login.data',
@@ -77,7 +76,7 @@ const configureStore = (initialState = {}) => {
   const composeEnhancers = compose;
 
   const middleware = composeEnhancers(
-    applyMiddleware(thunk, createApiClient(), logger),
+    applyMiddleware(thunk, createApiClient()),
   );
 
   const store = createStore(reducers, initialState, middleware);

@@ -1,7 +1,7 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 import SignUp from './authentication/signUp';
 import SignIn from './authentication/signIn';
@@ -9,10 +9,10 @@ import ForgotPassword from './authentication/forgotPassword';
 
 import Dashboard from './secure/dashboard';
 
-import { userData } from '../redux/reducers/authentication/selectors';
+import {userData} from '../redux/reducers/authentication/selectors';
 
 export default () => {
-  const { uid } = useSelector(userData);
+  const {uid} = useSelector(userData);
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>

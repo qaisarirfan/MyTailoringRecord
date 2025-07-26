@@ -1,7 +1,7 @@
-import { createReducer } from '../../../utils/utility';
-import { LOGOUT } from '../authentication/actions';
-import { LOADED } from '../../middleware/actions';
-import { HIDE_TUTORIAL, LOAD, SHOW_TUTORIAL } from './actions';
+import {createReducer} from '../../../utils/utility';
+import {LOGOUT} from '../authentication/actions';
+import {LOADED} from '../../middleware/actions';
+import {HIDE_TUTORIAL, LOAD, SHOW_TUTORIAL} from './actions';
 
 // Required variables
 const initialState = {

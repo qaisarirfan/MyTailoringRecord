@@ -1,4 +1,4 @@
-import { SET_LANGUAGE } from './actions';
+import {SET_LANGUAGE} from './actions';
 
 export function createLanguageAction(payload) {
   return {

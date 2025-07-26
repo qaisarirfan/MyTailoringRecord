@@ -1,5 +1,5 @@
-import { CLIENTS } from '../../../config/clients';
-import { LOGIN, LOGOUT, REGISTER } from './actions';
+import {CLIENTS} from '../../../config/clients';
+import {LOGIN, LOGOUT, REGISTER} from './actions';
 
 // Action creators
 export function register() {

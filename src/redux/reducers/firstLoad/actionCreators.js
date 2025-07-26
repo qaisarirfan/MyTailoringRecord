@@ -1,4 +1,4 @@
-import { HIDE_TUTORIAL, LOAD, SHOW_TUTORIAL } from './actions';
+import {HIDE_TUTORIAL, LOAD, SHOW_TUTORIAL} from './actions';
 
 export function createLoadAction() {
   return {

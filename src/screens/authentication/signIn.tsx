@@ -1,11 +1,11 @@
 import React from 'react';
-import { Box, Heading, ScrollView, VStack, Center } from 'native-base';
-import { useDispatch } from 'react-redux';
+import {Box, Heading, ScrollView, VStack, Center} from 'native-base';
+import {useDispatch} from 'react-redux';
 
 import SignInForm from '../../components/forms/signIn';
 
-import { login } from '../../redux/reducers/authentication/actionCreators';
-import { StyleSheet } from 'react-native';
+import {login} from '../../redux/reducers/authentication/actionCreators';
+import {StyleSheet} from 'react-native';
 
 export const SignUp = () => {
   const dispatch = useDispatch();
@@ -24,8 +24,7 @@ export const SignUp = () => {
     <Box safeArea py="8" style={Styles.container}>
       <ScrollView
         _contentContainerStyle={Styles.scrollView}
-        keyboardDismissMode="interactive"
-      >
+        keyboardDismissMode="interactive">
         <VStack alignItems="center">
           <Center w="90%">
             <Heading
@@ -34,8 +33,7 @@ export const SignUp = () => {
               color="coolGray.800"
               _dark={{
                 color: 'warmGray.50',
-              }}
-            >
+              }}>
               Welcome
             </Heading>
             <Heading
@@ -45,8 +43,7 @@ export const SignUp = () => {
               }}
               color="coolGray.600"
               fontWeight="medium"
-              size="xs"
-            >
+              size="xs">
               Sign in to continue!
             </Heading>
             <SignInForm onSubmit={onSubmitHandler} />
@@ -58,7 +55,7 @@ export const SignUp = () => {
 };
 
 const Styles = StyleSheet.create({
-  container: { display: 'flex', flex: 1 },
+  container: {display: 'flex', flex: 1},
   scrollView: {
     flex: 1,
     justifyContent: 'center',

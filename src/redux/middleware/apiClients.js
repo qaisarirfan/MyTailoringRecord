@@ -1,16 +1,16 @@
-import { CLIENTS } from '../../config/clients';
-import { LOADING } from './actions';
+import {CLIENTS} from '../../config/clients';
+import {LOADING} from './actions';
 import clients from '../../config/clients';
 import defaultApiClients from './defaultApiClients';
 import firebaseAuthClients from './firebaseAuthClients';
 
-export const makeAnAction = (action) => (status, data) => {
-  const newAction = { ...action, type: action.type + status, ...data };
+export const makeAnAction = action => (status, data) => {
+  const newAction = {...action, type: action.type + status, ...data};
   delete newAction.request;
   return newAction;
 };
 
-export const addAnTokenToRequest = (state) => (request) => {
+export const addAnTokenToRequest = state => request => {
   const authToken = null;
   return authToken
     ? {
@@ -23,12 +23,12 @@ export const addAnTokenToRequest = (state) => (request) => {
     : request;
 };
 
-const apiClients = () => (store) => (next) => (action) => {
+const apiClients = () => store => next => action => {
   const clientName = action.client || 'default';
 
   if (!clients[clientName]) {
     throw new Error(
-      `Client with name "${clientName}" has not been defined in middleware`
+      `Client with name "${clientName}" has not been defined in middleware`,
     );
   }
 

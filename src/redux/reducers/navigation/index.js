@@ -1,5 +1,5 @@
-import { createReducer } from '../../../utils/utility';
-import { SET_NAVIGATION } from './actions';
+import {createReducer} from '../../../utils/utility';
+import {SET_NAVIGATION} from './actions';
 
 // navigation initial state
 export const initialState = {
