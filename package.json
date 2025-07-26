@@ -21,7 +21,6 @@
     "axios": "^1.10.0",
     "formik": "^2.4.6",
     "lodash": "^4.17.21",
-    "native-base": "^3.4.28",
     "prop-types": "^15.8.1",
     "react": "19.1.0",
     "react-native": "0.80.1",
