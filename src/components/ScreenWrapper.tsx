@@ -12,9 +12,7 @@ import {
 } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useExampleTheme } from '@src/hooks/useExampleTheme';
-import { useAnimatedHeaderHeight } from '@react-navigation/native-stack';
-import { useHeaderHeight } from '@react-navigation/elements';
+import { useExampleTheme } from '../hooks/useExampleTheme';
 
 type Props = ScrollViewProps & {
   children: React.ReactNode;
@@ -34,11 +32,6 @@ export default function ScreenWrapper({
 
   const insets = useSafeAreaInsets();
 
-  const { StatusBarManager } = NativeModules;
-  const statusBarHeight = StatusBarManager.HEIGHT;
-
-  const headerHeight = useHeaderHeight();
-
   const containerStyle = [
     styles.container,
     {
@@ -51,13 +44,6 @@ export default function ScreenWrapper({
 
   return (
     <>
-      <StatusBar
-        barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
-        backgroundColor={Platform.OS === 'android' ? '#000000' : undefined}
-        translucent={false}
-        animated
-        hidden={false}
-      />
       {withScrollView ? (
         <ScrollView
           {...rest}
@@ -66,11 +52,8 @@ export default function ScreenWrapper({
           alwaysBounceVertical={false}
           showsVerticalScrollIndicator={false}
           style={[containerStyle, style]}
-          scrollIndicatorInsets={{ top: headerHeight - statusBarHeight }}
         >
-          <View style={{ marginTop: Platform.OS === 'ios' ? headerHeight : 0 }}>
-            {children}
-          </View>
+          {children}
         </ScrollView>
       ) : (
         <View style={[containerStyle, style]}>{children}</View>
