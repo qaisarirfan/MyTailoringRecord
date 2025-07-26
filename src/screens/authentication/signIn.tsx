@@ -2,31 +2,29 @@ import React from 'react';
 import { Box, Heading, ScrollView, VStack, Center } from 'native-base';
 import { useDispatch } from 'react-redux';
 
-import SignInForm from '../components/forms/signIn';
+import SignInForm from '../../components/forms/signIn';
 
-import { register } from '../redux/reducers/authentication/actionCreators';
+import { login } from '../../redux/reducers/authentication/actionCreators';
+import { StyleSheet } from 'react-native';
 
 export const SignUp = () => {
   const dispatch = useDispatch();
 
-  const onSubmitHandler = ({
+  const onSubmitHandler = async ({
     email,
     password,
   }: {
     email: string;
     password: string;
   }) => {
-    dispatch(register(email, password));
+    await dispatch(login(email, password));
   };
 
   return (
-    <Box safeArea py="8" style={{ display: 'flex', flex: 1 }}>
+    <Box safeArea py="8" style={Styles.container}>
       <ScrollView
         keyboardDismissMode="interactive"
-        _contentContainerStyle={{
-          flex: 1,
-          justifyContent: 'center',
-        }}
+        _contentContainerStyle={Styles.scrollView}
       >
         <VStack alignItems="center">
           <Center w="90%">
@@ -58,5 +56,13 @@ export const SignUp = () => {
     </Box>
   );
 };
+
+const Styles = StyleSheet.create({
+  container: { display: 'flex', flex: 1 },
+  scrollView: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+});
 
 export default SignUp;

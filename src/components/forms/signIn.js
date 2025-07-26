@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
-import { registerLoader } from '../../redux/reducers/authentication/selectors';
+import { loginLoader } from '../../redux/reducers/authentication/selectors';
 import { useNavigation } from '@react-navigation/native';
 
 export const SignInForm = ({ email, password, onSubmit }) => {
-  const loader = useSelector(registerLoader);
+  const loader = useSelector(loginLoader);
 
   const navigation = useNavigation();
 
@@ -28,7 +28,7 @@ export const SignInForm = ({ email, password, onSubmit }) => {
       {({ handleChange, handleBlur, handleSubmit, values, errors }) => {
         return (
           <>
-            <FormControl isInvalid={!errors.email} isRequired>
+            <FormControl isInvalid={errors.email} isRequired>
               <FormControl.Label>Email</FormControl.Label>
               <Input
                 type="email"
@@ -41,7 +41,7 @@ export const SignInForm = ({ email, password, onSubmit }) => {
                 {errors.email}
               </FormControl.ErrorMessage>
             </FormControl>
-            <FormControl isInvalid={!errors.password} isRequired>
+            <FormControl isInvalid={errors.password} isRequired>
               <FormControl.Label>Password</FormControl.Label>
               <Input
                 type="password"
@@ -112,8 +112,8 @@ SignInForm.propTypes = {
 };
 
 SignInForm.defaultProps = {
-  email: '',
-  password: '',
+  email: 'qaisar.irfan.2888@gmail.com',
+  password: 'test123abc',
   onSubmit: () => null,
 };
 

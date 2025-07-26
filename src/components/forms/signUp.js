@@ -34,7 +34,7 @@ export const SignUpForm = ({
       {({ handleChange, handleBlur, handleSubmit, values, errors }) => {
         return (
           <>
-            <FormControl isInvalid={!errors.email} isRequired>
+            <FormControl isInvalid={errors.email} isRequired>
               <FormControl.Label>Email</FormControl.Label>
               <Input
                 type="email"
@@ -47,7 +47,7 @@ export const SignUpForm = ({
                 {errors.email}
               </FormControl.ErrorMessage>
             </FormControl>
-            <FormControl isInvalid={!errors.password} isRequired>
+            <FormControl isInvalid={errors.password} isRequired>
               <FormControl.Label>Password</FormControl.Label>
               <Input
                 type="password"
@@ -60,7 +60,7 @@ export const SignUpForm = ({
                 {errors.password}
               </FormControl.ErrorMessage>
             </FormControl>
-            <FormControl isInvalid={!errors.passwordConfirmation} isRequired>
+            <FormControl isInvalid={errors.passwordConfirmation} isRequired>
               <FormControl.Label>Confirm Password</FormControl.Label>
               <Input
                 type="password"
@@ -98,9 +98,9 @@ SignUpForm.propTypes = {
 };
 
 SignUpForm.defaultProps = {
-  email: '',
-  password: '',
-  passwordConfirmation: '',
+  email: 'qaisar.irfan.2888@gmail.com',
+  password: 'test123abc',
+  passwordConfirmation: 'test123abc',
   onSubmit: () => null,
 };
 
