@@ -7,6 +7,7 @@
     "source.fixAll.eslint": "explicit"
   },
   "eslint.format.enable": true,
-  "eslint.packageManager": "yarn",
   "eslint.run": "onSave",
+  "editor.formatOnSaveMode": "modificationsIfAvailable",
+  "eslint.codeActionsOnSave.mode": "problems"
 }
