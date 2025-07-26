@@ -1,19 +1,16 @@
-import {applyMiddleware, compose, createStore} from 'redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import createFilter from 'redux-persist-transform-filter';
-import persistCombineReducers from 'redux-persist/lib/persistCombineReducers';
-import thunk from 'redux-thunk';
-
-import ReducerRegistry from './ReducerRegistry';
-import createApiClient from './middleware/apiClients';
-
-import authReducer from './reducers/authentication';
-import firstLoadReducer from './reducers/firstLoad';
-import userReducer from './reducers/user';
-import languagesReducer from './reducers/languages';
-import navigationReducer from './reducers/navigation';
-
-import {REDUCERS_NAME} from '../utils/constants';
+import { configureStore } from '@reduxjs/toolkit';
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from 'redux-persist';
+import { REDUCERS_NAME } from '../utils/constants';
+import { api } from './api';
 
 export const saveAuthFilter = createFilter(REDUCERS_NAME.authentication, [
   'login.data',
@@ -59,29 +56,20 @@ const storageConfig = {
   ],
 };
 
-const configureStore = (initialState = {}) => {
-  AsyncStorage.getAllKeys(console.log);
-  // Add default reducers
-  ReducerRegistry.register(REDUCERS_NAME.authentication, authReducer);
-  ReducerRegistry.register(REDUCERS_NAME.firstLoad, firstLoadReducer);
-  ReducerRegistry.register(REDUCERS_NAME.user, userReducer);
-  ReducerRegistry.register(REDUCERS_NAME.languages, languagesReducer);
-  ReducerRegistry.register(REDUCERS_NAME.navigation, navigationReducer);
-
-  const reducers = persistCombineReducers(
-    storageConfig,
-    ReducerRegistry.getReducers(),
-  );
-
-  const composeEnhancers = compose;
-
-  const middleware = composeEnhancers(
-    applyMiddleware(thunk, createApiClient()),
-  );
-
-  const store = createStore(reducers, initialState, middleware);
+const configStore = () => {
+  const store = configureStore({
+    reducer: {
+      [api.reducerPath]: api.reducer,
+    },
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }).concat(api.middleware),
+  });
 
   return store;
 };
 
-export default configureStore;
+export default configStore;

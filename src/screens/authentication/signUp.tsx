@@ -4,15 +4,11 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import SignUpForm from '../../components/forms/signUp';
 
-import {register} from '../../redux/reducers/authentication/actionCreators';
-import {StyleSheet} from 'react-native';
-import {registerError} from '../../redux/reducers/authentication/selectors';
+
+import { StyleSheet } from 'react-native';
 
 export const SignUp = () => {
   const dispatch = useDispatch();
-  const error = useSelector(registerError);
-
-  console.log(error?.result);
 
   const onSubmitHandler = ({
     email,
@@ -20,15 +16,14 @@ export const SignUp = () => {
   }: {
     email: string;
     password: string;
-  }) => {
-    dispatch(register(email, password));
-  };
+  }) => {};
 
   return (
     <Box safeArea py="8" style={Styles.container}>
       <ScrollView
         keyboardDismissMode="interactive"
-        _contentContainerStyle={Styles.scrollView}>
+        _contentContainerStyle={Styles.scrollView}
+      >
         <VStack alignItems="center">
           <Center w="90%">
             <Heading size="lg" color="coolGray.800" fontWeight="semibold">
@@ -41,7 +36,8 @@ export const SignUp = () => {
                 color: 'warmGray.200',
               }}
               fontWeight="medium"
-              size="xs">
+              size="xs"
+            >
               Sign up to continue!
             </Heading>
             <SignUpForm onSubmit={onSubmitHandler} />

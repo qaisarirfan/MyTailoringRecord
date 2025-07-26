@@ -2,12 +2,12 @@ import React from 'react';
 import {Box, Heading, ScrollView, VStack, Center, Button} from 'native-base';
 import {StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {userData} from '../../redux/reducers/authentication/selectors';
-import {logout} from '../../redux/reducers/authentication/actionCreators';
+
+
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
-  const {email} = useSelector(userData);
+  const email = null
   return (
     <Box safeArea py="8" style={Styles.container}>
       <ScrollView
@@ -24,7 +24,7 @@ export const Dashboard = () => {
               }}>
               {`Welcome ${email}`}
             </Heading>
-            <Button onPress={async () => await dispatch(logout())}>
+            <Button>
               Logout
             </Button>
           </Center>

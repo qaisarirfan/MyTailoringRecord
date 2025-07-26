@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
-import {registerLoader} from '../../redux/reducers/authentication/selectors';
+
 
 export const SignUpForm = ({
   email,
@@ -13,7 +13,7 @@ export const SignUpForm = ({
   passwordConfirmation,
   onSubmit,
 }) => {
-  const loader = useSelector(registerLoader);
+  const loader = useSelector(()=>null);
 
   return (
     <Formik
