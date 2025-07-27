@@ -16,14 +16,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+import {Task} from './Task';
 
-/**
- * Metro configuration
- * https://facebook.github.io/metro/docs/configuration
- *
- * @type {import('metro-config').MetroConfig}
- */
-const config = {};
-
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
+// If you have multiple data models, you can export all of them in a
+// list as a convenience when providing the schema when opening a Realm.
+export const schemas = [Task];

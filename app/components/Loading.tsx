@@ -16,14 +16,32 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+
+import {colors} from '../styles/colors';
 
 /**
- * Metro configuration
- * https://facebook.github.io/metro/docs/configuration
- *
- * @type {import('metro-config').MetroConfig}
+ * Loading indicator.
  */
-const config = {};
+export function Loading() {
+  return (
+    <View style={styles.loading}>
+      <Text style={styles.text}>Loading the tasks...</Text>
+    </View>
+  );
+}
 
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
+const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.grayLight,
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: colors.grayDark,
+  },
+});

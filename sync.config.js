@@ -16,14 +16,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+import Config from 'react-native-config';
 
-/**
- * Metro configuration
- * https://facebook.github.io/metro/docs/configuration
- *
- * @type {import('metro-config').MetroConfig}
- */
-const config = {};
-
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
+export const SYNC_CONFIG = {
+  // Set `enabled` to `true` to enable sync.
+  enabled: false,
+  // Add your Atlas App ID here if sync is enabled.
+  appId: Config.ATLAS_APP_ID || 'YOUR_APP_ID',
+};

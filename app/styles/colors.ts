@@ -16,14 +16,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
-
-/**
- * Metro configuration
- * https://facebook.github.io/metro/docs/configuration
- *
- * @type {import('metro-config').MetroConfig}
- */
-const config = {};
-
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
+export const colors = {
+  black: '#333333',
+  grayLight: '#f5f5f5',
+  grayMedium: '#d3d3d3',
+  grayDark: '#6e6969',
+  purple: '#671ff7',
+  red: '#b72929',
+  white: '#ffffff',
+} as const;

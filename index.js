@@ -16,14 +16,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+// Polyfill for `crypto.getRandomValues()` used by BSON.
+import 'react-native-get-random-values';
+import React from 'react';
+import {AppRegistry} from 'react-native';
+
+import {AppNonSync} from './app/AppNonSync';
+import {AppSync} from './app/AppSync';
+import {SYNC_CONFIG} from './sync.config';
+import {name as appName} from './app.json';
 
 /**
- * Metro configuration
- * https://facebook.github.io/metro/docs/configuration
- *
- * @type {import('metro-config').MetroConfig}
+ * Renders either the app that uses Device Sync, or the
+ * one only using a local Realm.
  */
-const config = {};
+export const App = () =>
+  SYNC_CONFIG.enabled ? <AppSync appId={SYNC_CONFIG.appId} /> : <AppNonSync />;
 
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
+AppRegistry.registerComponent(appName, () => App);
