@@ -20,7 +20,7 @@ import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { RealmProvider } from "@realm/react";
 
-import { TaskScreen } from "./screens/TaskScreen";
+import Screens from "./screens";
 import { colors } from "./styles/colors";
 import { schemas } from "./models";
 
@@ -35,7 +35,7 @@ export function AppNonSync() {
       Since this component renders the local-only app, there is no need to
       set up `AppProvider` or `UserProvider`. */}
       <RealmProvider schema={schemas}>
-        <TaskScreen />
+        <Screens />
       </RealmProvider>
     </SafeAreaView>
   );
