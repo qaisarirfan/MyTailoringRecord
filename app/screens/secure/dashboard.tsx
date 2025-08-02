@@ -1,52 +1,65 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
-import { StyleSheet, Button, ScrollView, Text, StatusBar } from "react-native";
-import { Avatar, Card, IconButton, Icon, Divider } from "react-native-paper";
+import { StyleSheet, ScrollView } from "react-native";
+import { Avatar, Card, IconButton, Divider } from "react-native-paper";
 
-export const Dashboard = () => {
-  const email = null;
+// Define reusable left and right components
+const AddCustomerLeft = (props: any) => (
+  <Avatar.Icon {...props} icon="face-man" />
+);
+const AddCustomerRight = (props: any) => (
+  <IconButton {...props} icon="plus" onPress={() => {}} />
+);
+
+const AddMeasurementsLeft = (props: any) => (
+  <Avatar.Icon {...props} icon="ruler" />
+);
+const AddMeasurementsRight = (props: any) => (
+  <IconButton {...props} icon="plus" onPress={() => {}} />
+);
+
+const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    padding: 12,
+  },
+});
+
+const Dashboard = () => {
   const { navigate } = useNavigation<
     NativeStackNavigationProp<{
       AddCustomer: undefined;
       Measurements: undefined;
     }>
   >();
+
   return (
     <ScrollView
       keyboardDismissMode="interactive"
-      contentContainerStyle={Styles.scrollView}
+      contentContainerStyle={styles.scrollView}
     >
       <Card mode="contained" onPress={() => navigate("AddCustomer")}>
         <Card.Title
           title="Add customers"
           subtitle="Card Subtitle"
-          left={(props) => <Avatar.Icon {...props} icon="face-man" />}
-          right={(props) => (
-            <IconButton {...props} icon="plus" onPress={() => {}} />
-          )}
+          left={AddCustomerLeft}
+          right={AddCustomerRight}
         />
       </Card>
-      <Divider style={{ marginVertical: 12 }}></Divider>
+
+      <Divider />
+
       <Card mode="contained" onPress={() => navigate("Measurements")}>
         <Card.Title
           title="Add measurements"
           subtitle="Card Subtitle"
-          left={(props) => <Avatar.Icon {...props} icon="ruler" />}
-          right={(props) => (
-            <IconButton {...props} icon="plus" onPress={() => {}} />
-          )}
+          left={AddMeasurementsLeft}
+          right={AddMeasurementsRight}
         />
       </Card>
     </ScrollView>
   );
 };
-
-const Styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-    padding: 12,
-  },
-});
 
 export default Dashboard;

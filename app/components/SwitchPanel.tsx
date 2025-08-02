@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,12 +14,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
-import React from 'react';
-import {StyleSheet, Switch, Text, View} from 'react-native';
+import React from "react";
+import { StyleSheet, Switch, Text, View } from "react-native";
 
-import {colors} from '../styles/colors';
+import { colors } from "../styles/colors";
 
 type SwitchPanelProps = {
   label: string;
@@ -27,10 +27,27 @@ type SwitchPanelProps = {
   onValueChange: (value: boolean) => void;
 };
 
+const styles = StyleSheet.create({
+  label: {
+    color: colors.grayDark,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  panel: {
+    alignItems: "center",
+    borderColor: colors.grayMedium,
+    borderTopWidth: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 25,
+    paddingVertical: 15,
+  },
+});
+
 /**
  * A panel containing a switch toggle button.
  */
-export function SwitchPanel({label, value, onValueChange}: SwitchPanelProps) {
+export function SwitchPanel({ label, value, onValueChange }: SwitchPanelProps) {
   return (
     <View style={styles.panel}>
       <Text style={styles.label}>{label}</Text>
@@ -38,20 +55,3 @@ export function SwitchPanel({label, value, onValueChange}: SwitchPanelProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  panel: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 25,
-    paddingVertical: 15,
-    borderTopWidth: 1,
-    borderColor: colors.grayMedium,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: colors.grayDark,
-  },
-});

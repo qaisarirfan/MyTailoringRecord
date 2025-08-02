@@ -1,17 +1,13 @@
-import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
 
+import AddCustomer from "./secure/add-customer";
 import Dashboard from "./secure/dashboard";
 import Measurements from "./secure/measurements";
-import { Button } from "react-native-paper";
-import ScreenWrapper from "../components/ScreenWrapper";
 import ShopType from "./secure/shop-type";
-import AddCustomer from "./secure/add-customer";
-import { TaskScreen } from "./TaskScreen";
 
 export default () => {
-  const uid = undefined;
   const Stack = createNativeStackNavigator();
 
   return (

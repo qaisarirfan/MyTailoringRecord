@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,7 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -23,12 +23,23 @@ import { AddTaskForm } from "../components/AddTaskForm";
 import { IntroText } from "../components/IntroText";
 import { SwitchPanel } from "../components/SwitchPanel";
 import { TaskList } from "../components/TaskList";
-import { colors } from "../styles/colors";
 import { useTaskManager } from "../hooks/useTaskManager";
+import { colors } from "../styles/colors";
 
 type TaskScreenProps = {
   userId?: string;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: colors.grayLight,
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 25,
+  },
+});
 
 /**
  * Displays the list of tasks and a form to add new tasks.
@@ -65,14 +76,3 @@ export function TaskScreen({ userId }: TaskScreenProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.grayLight,
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 25,
-  },
-});

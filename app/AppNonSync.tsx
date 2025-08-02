@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,36 +14,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
+import { RealmProvider } from "@realm/react";
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { RealmProvider } from "@realm/react";
 
+import { schemas } from "./models";
 import Screens from "./screens";
 import { colors } from "./styles/colors";
-import { schemas } from "./models";
+import { PaperProvider } from "react-native-paper";
+import { useExampleTheme } from "./hooks/useExampleTheme";
+
+const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.white,
+    flex: 1,
+  },
+});
 
 /**
  * The root React component for the local-only app which renders
  * `@realm/react`'s `RealmProvider` for opening a Realm.
  */
 export function AppNonSync() {
+  const theme = useExampleTheme();
   return (
-    <SafeAreaView style={styles.screen}>
-      {/* Define the Realm configuration as props passed to `RealmProvider`.
+    <PaperProvider theme={theme}>
+      <SafeAreaView style={styles.screen}>
+        {/* Define the Realm configuration as props passed to `RealmProvider`.
       Since this component renders the local-only app, there is no need to
       set up `AppProvider` or `UserProvider`. */}
-      <RealmProvider schema={schemas}>
-        <Screens />
-      </RealmProvider>
-    </SafeAreaView>
+        <RealmProvider schema={schemas}>
+          <Screens />
+        </RealmProvider>
+      </SafeAreaView>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors.white,
-  },
-});

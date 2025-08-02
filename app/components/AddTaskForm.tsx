@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,7 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
@@ -24,6 +24,40 @@ import { colors } from "../styles/colors";
 type AddTaskFormProps = {
   onSubmit: (description: string) => void;
 };
+
+const styles = StyleSheet.create({
+  form: {
+    flexDirection: "row",
+    height: 50,
+    marginBottom: 20,
+    marginTop: 25,
+  },
+  icon: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  submitButton: {
+    backgroundColor: colors.purple,
+    borderRadius: 50,
+    height: 50,
+    justifyContent: "center",
+    width: 50,
+  },
+  textInput: {
+    backgroundColor: colors.white,
+    borderColor: colors.grayMedium,
+    borderRadius: 5,
+    borderWidth: 1,
+    color: colors.grayDark,
+    flex: 1,
+    fontSize: 16,
+    marginRight: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+  },
+});
 
 /**
  * Form for adding a new task.
@@ -58,37 +92,3 @@ export function AddTaskForm({ onSubmit }: AddTaskFormProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  form: {
-    height: 50,
-    marginTop: 25,
-    marginBottom: 20,
-    flexDirection: "row",
-  },
-  textInput: {
-    flex: 1,
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    marginRight: 20,
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: colors.grayMedium,
-    backgroundColor: colors.white,
-    fontSize: 16,
-    color: colors.grayDark,
-  },
-  submitButton: {
-    width: 50,
-    height: 50,
-    justifyContent: "center",
-    borderRadius: 50,
-    backgroundColor: colors.purple,
-  },
-  icon: {
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 16,
-    color: colors.white,
-  },
-});

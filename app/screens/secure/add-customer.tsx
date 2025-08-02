@@ -1,11 +1,31 @@
+import { useFormik } from "formik";
+import { PhoneNumberUtil } from "google-libphonenumber";
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { TextInput, Button, Text, HelperText } from "react-native-paper";
-import { useFormik } from "formik";
 import * as Yup from "yup";
-import { PhoneNumberUtil } from "google-libphonenumber";
 
 const phoneUtil = PhoneNumberUtil.getInstance();
+
+const styles = StyleSheet.create({
+  button: {
+    marginTop: 16,
+  },
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  error: {
+    marginBottom: 8,
+  },
+  input: {},
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 24,
+    textAlign: "center",
+  },
+});
 
 const AddCustomer = () => {
   const formik = useFormik({
@@ -27,7 +47,7 @@ const AddCustomer = () => {
             try {
               const phoneNumber = phoneUtil.parseAndKeepRawInput(value, "PK");
               return phoneUtil.isValidNumberForRegion(phoneNumber, "PK");
-            } catch (e) {
+            } catch {
               return false;
             }
           }
@@ -100,31 +120,10 @@ const AddCustomer = () => {
         style={styles.button}
         disabled={!formik.isValid || formik.isSubmitting}
       >
-        Add Customer
+        <Text>Add Customer</Text>
       </Button>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: "#fff",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 24,
-    textAlign: "center",
-  },
-  input: {},
-  error: {
-    marginBottom: 8,
-  },
-  button: {
-    marginTop: 16,
-  },
-});
 
 export default AddCustomer;

@@ -1,18 +1,19 @@
+import { Formik, FormikProps } from "formik";
 import React, { useState } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import {
   Button,
   TextInput,
   SegmentedButtons,
-  ProgressBar,
   HelperText,
 } from "react-native-paper";
-import { Formik, FormikProps } from "formik";
-import * as Yup from "yup";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import * as Yup from "yup";
+
+import { colors } from "../../styles/colors";
 
 // Define interface for form values
-interface Measurements {
+interface MeasurementsFields {
   gender: string;
   shoulder_width: number | null;
   chest_bust: number | null;
@@ -125,7 +126,7 @@ const validationSchema = [
 ];
 
 // Initial form values
-const initialValues: Measurements = {
+const initialValues: MeasurementsFields = {
   gender: __DEV__ ? "Men" : "",
   shoulder_width: null,
   chest_bust: null,
@@ -151,7 +152,10 @@ const initialValues: Measurements = {
 };
 
 // Input configurations with icons and helper text
-const inputConfigs: Record<keyof Omit<Measurements, "gender">, InputConfig> = {
+const inputConfigs: Record<
+  keyof Omit<MeasurementsFields, "gender">,
+  InputConfig
+> = {
   shoulder_width: {
     icon: "human",
     helperText: "Measure across the back from shoulder to shoulder",
@@ -229,52 +233,89 @@ const inputConfigs: Record<keyof Omit<Measurements, "gender">, InputConfig> = {
   },
 };
 
-const Measurements: React.FC = () => {
+const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 40,
+    marginTop: 20,
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  input: {
+    backgroundColor: colors.white,
+  },
+  inputContainer: {
+    marginBottom: 15,
+  },
+  navButton: {
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  section: {
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginBottom: 10,
+  },
+  segmentedButtons: {
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+});
+
+// Render input field with icon
+const renderInput = (
+  formik: FormikProps<MeasurementsFields>,
+  label: string,
+  name: keyof MeasurementsFields,
+  placeholder: string
+) => (
+  <View style={styles.inputContainer}>
+    <TextInput
+      label={`${label} (inches)`}
+      value={formik.values[name]?.toString()}
+      onChangeText={formik.handleChange(name)}
+      onBlur={formik.handleBlur(name)}
+      keyboardType="numeric"
+      placeholder={placeholder}
+      mode="outlined"
+      style={styles.input}
+      error={formik.touched[name] && !!formik.errors[name]}
+      left={
+        <TextInput.Icon
+          icon={() => (
+            <Icon
+              name={name !== "gender" ? inputConfigs[name]?.icon : ""}
+              size={20}
+            />
+          )}
+        />
+      }
+    />
+    <HelperText
+      type={formik.touched[name] && formik.errors[name] ? "error" : "info"}
+    >
+      {formik.errors[name] ??
+        (name !== "gender" ? inputConfigs[name]?.helperText : null)}
+    </HelperText>
+  </View>
+);
+
+const Measurements = () => {
   const [step, setStep] = useState<number>(1);
   const totalSteps: number = 4;
 
-  // Render input field with icon
-  const renderInput = (
-    formik: FormikProps<Measurements>,
-    label: string,
-    name: keyof Measurements,
-    placeholder: string
-  ) => (
-    <View style={styles.inputContainer}>
-      <TextInput
-        label={`${label} (inches)`}
-        value={formik.values[name]?.toString()}
-        onChangeText={formik.handleChange(name)}
-        onBlur={formik.handleBlur(name)}
-        keyboardType="numeric"
-        placeholder={placeholder}
-        mode="outlined"
-        style={styles.input}
-        error={formik.touched[name] && !!formik.errors[name]}
-        left={
-          <TextInput.Icon
-            icon={() => (
-              <Icon
-                name={name !== "gender" ? inputConfigs[name]?.icon : ""}
-                size={20}
-              />
-            )}
-          />
-        }
-      />
-      <HelperText
-        type={formik.touched[name] && formik.errors[name] ? "error" : "info"}
-      >
-        {formik.errors[name]
-          ? formik.errors[name]
-          : name !== "gender"
-          ? inputConfigs[name]?.helperText
-          : null}
-      </HelperText>
-    </View>
-  );
-
-  const handleSubmit = (values: Measurements) => {
+  const handleSubmit = () => {
     if (step !== totalSteps) {
       setStep(step + 1);
     }
@@ -438,7 +479,7 @@ const Measurements: React.FC = () => {
                   style={styles.navButton}
                   icon="arrow-left"
                 >
-                  Back
+                  <Text>Back</Text>
                 </Button>
               )}
 
@@ -462,45 +503,5 @@ const Measurements: React.FC = () => {
     </Formik>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  section: {
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginBottom: 10,
-  },
-  inputContainer: {
-    marginBottom: 15,
-  },
-  input: {
-    backgroundColor: "#fff",
-  },
-  segmentedButtons: {
-    marginBottom: 10,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 20,
-    marginBottom: 40,
-  },
-  navButton: {
-    flex: 1,
-    marginHorizontal: 5,
-  },
-});
 
 export default Measurements;

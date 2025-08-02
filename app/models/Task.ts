@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,9 +14,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
-import Realm, {BSON} from 'realm';
+import Realm, { BSON } from "realm";
 
 /**
  * The `Task` data model.
@@ -34,10 +34,14 @@ import Realm, {BSON} from 'realm';
  */
 export class Task extends Realm.Object {
   _id: BSON.ObjectId = new BSON.ObjectId();
+
   description!: string;
+
   isComplete: boolean = false;
+
   createdAt: Date = new Date();
+
   userId!: string;
 
-  static primaryKey = '_id';
+  static primaryKey = "_id";
 }

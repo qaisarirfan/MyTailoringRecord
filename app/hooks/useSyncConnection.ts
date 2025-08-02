@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,11 +14,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
-import {useCallback, useEffect, useState} from 'react';
-import {ConnectionState} from 'realm';
-import {useRealm} from '@realm/react';
+import { useRealm } from "@realm/react";
+import { useCallback, useEffect, useState } from "react";
+import { ConnectionState } from "realm";
 
 /**
  * Handles setting up a connection listener and provides functions
@@ -60,5 +60,5 @@ export function useSyncConnection() {
       realm.syncSession?.removeConnectionNotification(handleConnectionChange);
   }, [realm.syncSession]);
 
-  return {isConnected, reconnect, disconnect};
+  return { isConnected, reconnect, disconnect };
 }

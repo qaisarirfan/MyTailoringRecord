@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,9 +14,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
-import React, {useEffect, useState} from 'react';
+import { AuthOperationName, useEmailPasswordAuth } from "@realm/react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   Pressable,
@@ -24,10 +25,76 @@ import {
   Text,
   TextInput,
   View,
-} from 'react-native';
-import {AuthOperationName, useEmailPasswordAuth} from '@realm/react';
+} from "react-native";
 
-import {colors} from '../styles/colors';
+import { colors } from "../styles/colors";
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: colors.purple,
+    borderRadius: 25,
+    marginHorizontal: 10,
+    paddingVertical: 14,
+    width: 120,
+  },
+  buttonText: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  buttons: {
+    flexDirection: "row",
+    marginTop: 100,
+  },
+  container: {
+    alignItems: "center",
+    backgroundColor: colors.grayLight,
+    flex: 1,
+  },
+  disabled: {
+    opacity: 0.8,
+  },
+  error: {
+    color: colors.grayDark,
+    marginTop: 10,
+    textAlign: "center",
+  },
+  form: {
+    alignItems: "center",
+    backgroundColor: colors.white,
+    borderColor: colors.grayMedium,
+    borderRadius: 5,
+    borderWidth: 1,
+    paddingHorizontal: 30,
+    paddingVertical: 40,
+    width: "85%",
+  },
+  input: {
+    alignSelf: "stretch",
+    backgroundColor: colors.grayLight,
+    borderColor: colors.grayMedium,
+    borderRadius: 5,
+    borderWidth: 1,
+    color: colors.grayDark,
+    fontSize: 16,
+    marginBottom: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  logo: {
+    height: 150,
+    marginBottom: 30,
+    marginTop: 50,
+  },
+  title: {
+    color: colors.black,
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 50,
+    textAlign: "center",
+  },
+});
 
 /**
  * Screen for registering and/or logging in to the App Services App.
@@ -35,9 +102,9 @@ import {colors} from '../styles/colors';
 export function LoginScreen() {
   // Here we use the email/password auth hook, but you may also use
   // the `useAuth()` hook for all auth operations.
-  const {logIn, register, result} = useEmailPasswordAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { logIn, register, result } = useEmailPasswordAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // To display an error message on the screen whenever an auth
   // operation returns an error, we first make sure the error is
@@ -49,7 +116,7 @@ export function LoginScreen() {
   // Automatically log in the user after successful registration.
   useEffect(() => {
     if (result.success && result.operation === AuthOperationName.Register) {
-      logIn({email, password});
+      logIn({ email, password });
     }
   }, [result, logIn, email, password]);
 
@@ -58,7 +125,7 @@ export function LoginScreen() {
       <Image
         alt="Atlas App Services"
         resizeMode="contain"
-        source={require('../assets/atlas-app-services.png')}
+        source={require("../assets/atlas-app-services.png")}
         style={styles.logo}
       />
       <Text style={styles.title}>Atlas Device SDK for React Native</Text>
@@ -90,14 +157,16 @@ export function LoginScreen() {
         <View style={styles.buttons}>
           <Pressable
             disabled={result.pending}
-            onPress={() => logIn({email, password})}
-            style={[styles.button, result.pending && styles.disabled]}>
+            onPress={() => logIn({ email, password })}
+            style={[styles.button, result.pending && styles.disabled]}
+          >
             <Text style={styles.buttonText}>Log In</Text>
           </Pressable>
           <Pressable
             disabled={result.pending}
-            onPress={() => register({email, password})}
-            style={[styles.button, result.pending && styles.disabled]}>
+            onPress={() => register({ email, password })}
+            style={[styles.button, result.pending && styles.disabled]}
+          >
             <Text style={styles.buttonText}>Register</Text>
           </Pressable>
         </View>
@@ -105,70 +174,3 @@ export function LoginScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: colors.grayLight,
-  },
-  logo: {
-    height: 150,
-    marginTop: 50,
-    marginBottom: 30,
-  },
-  title: {
-    marginBottom: 50,
-    textAlign: 'center',
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: colors.black,
-  },
-  form: {
-    width: '85%',
-    paddingHorizontal: 30,
-    paddingVertical: 40,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: colors.grayMedium,
-    backgroundColor: colors.white,
-  },
-  input: {
-    alignSelf: 'stretch',
-    marginBottom: 20,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: colors.grayMedium,
-    backgroundColor: colors.grayLight,
-    fontSize: 16,
-    color: colors.grayDark,
-  },
-  error: {
-    marginTop: 10,
-    textAlign: 'center',
-    color: colors.grayDark,
-  },
-  buttons: {
-    marginTop: 100,
-    flexDirection: 'row',
-  },
-  button: {
-    width: 120,
-    marginHorizontal: 10,
-    paddingVertical: 14,
-    borderRadius: 25,
-    backgroundColor: colors.purple,
-  },
-  buttonText: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: colors.white,
-  },
-  disabled: {
-    opacity: 0.8,
-  },
-});

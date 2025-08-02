@@ -1,3 +1,6 @@
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useFormik } from "formik";
 import React from "react";
 import { View, StyleSheet, SafeAreaView } from "react-native";
 import {
@@ -7,11 +10,31 @@ import {
   Divider,
   HelperText,
 } from "react-native-paper";
-import { useFormik } from "formik";
 import * as Yup from "yup";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+import { colors } from "../../styles/colors";
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    borderTopColor: colors.grayLight,
+    borderTopWidth: 1,
+    padding: 20,
+  },
+  container: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    padding: 20,
+  },
+  errorText: {},
+  saveButton: {},
+  title: {
+    marginBottom: 20,
+    textAlign: "center",
+  },
+});
 
 const ShopType = () => {
   const navigation =
@@ -23,13 +46,9 @@ const ShopType = () => {
     validationSchema: Yup.object({
       shop_type: Yup.string().required("Please select a shop type"),
     }),
-    onSubmit: async (values) => {
-      try {
-        // await AsyncStorage.setItem("shop_type", values.shop_type);
-        navigation.navigate("Dashboard");
-      } catch (error) {
-        console.error("Error saving shop type:", error);
-      }
+    onSubmit: (values) => {
+      navigation.navigate("Dashboard");
+      return Promise.resolve(values);
     },
   });
 
@@ -66,32 +85,11 @@ const ShopType = () => {
           style={styles.saveButton}
           disabled={formik.isSubmitting}
         >
-          Save
+          <Text>Save</Text>
         </Button>
       </View>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  errorText: {},
-  buttonContainer: {
-    padding: 20,
-    borderTopWidth: 1,
-    borderTopColor: "#eee",
-  },
-  saveButton: {},
-});
 
 export default ShopType;

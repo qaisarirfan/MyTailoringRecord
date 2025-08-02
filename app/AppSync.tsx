@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,23 +14,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
-import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
-import {OpenRealmBehaviorType} from 'realm';
-import {AppProvider, RealmProvider, UserProvider} from '@realm/react';
+import { AppProvider, RealmProvider, UserProvider } from "@realm/react";
+import React from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
+import { OpenRealmBehaviorType } from "realm";
 
-import {Loading} from './components/Loading';
-import {LoginScreen} from './screens/LoginScreen';
-import {Task} from './models/Task';
-import {TaskScreenSync} from './screens/TaskScreenSync';
-import {colors} from './styles/colors';
-import {schemas} from './models';
+import { Loading } from "./components/Loading";
+import { schemas } from "./models";
+import { Task } from "./models/Task";
+import { LoginScreen } from "./screens/LoginScreen";
+import { TaskScreenSync } from "./screens/TaskScreenSync";
+import { colors } from "./styles/colors";
 
 type AppSyncProps = {
   appId: string;
 };
+
+const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.white,
+    flex: 1,
+  },
+});
 
 /**
  * The root React component for the Device Sync enabled app which renders
@@ -38,7 +45,7 @@ type AppSyncProps = {
  * App, `UserProvider` for providing the App User once authenticated, and
  * `RealmProvider` for opening a Realm.
  */
-export function AppSync({appId}: AppSyncProps) {
+export function AppSync({ appId }: AppSyncProps) {
   return (
     <SafeAreaView style={styles.screen}>
       <AppProvider id={appId}>
@@ -57,7 +64,7 @@ export function AppSync({appId}: AppSyncProps) {
               // To sync data to the device, we need to subscribe to our tasks.
               initialSubscriptions: {
                 update: (mutableSubs, realm) =>
-                  mutableSubs.add(realm.objects(Task), {name: 'myTasks'}),
+                  mutableSubs.add(realm.objects(Task), { name: "myTasks" }),
               },
               // We can specify the behavior when opening a Realm for the first time
               // (`newRealmFileBehavior`) and for subsequent ones (`existingRealmFileBehavior`).
@@ -75,7 +82,8 @@ export function AppSync({appId}: AppSyncProps) {
               existingRealmFileBehavior: {
                 type: OpenRealmBehaviorType.OpenImmediately,
               },
-            }}>
+            }}
+          >
             <TaskScreenSync />
           </RealmProvider>
         </UserProvider>
@@ -83,10 +91,3 @@ export function AppSync({appId}: AppSyncProps) {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors.white,
-  },
-});

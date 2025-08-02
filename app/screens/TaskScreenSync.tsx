@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,17 +14,61 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
-import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import {useApp, useAuth, useUser} from '@realm/react';
+import { useApp, useAuth, useUser } from "@realm/react";
+import React from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import {OfflineModeButton} from '../components/OfflineModeButton';
-import {TaskScreen} from './TaskScreen';
-import {colors} from '../styles/colors';
-import {useSyncConnection} from '../hooks/useSyncConnection';
+import { TaskScreen } from "./TaskScreen";
+import { OfflineModeButton } from "../components/OfflineModeButton";
+import { useSyncConnection } from "../hooks/useSyncConnection";
+import { colors } from "../styles/colors";
 
+const styles = StyleSheet.create({
+  authButton: {
+    borderColor: colors.grayMedium,
+    borderRadius: 25,
+    borderWidth: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+  },
+  authButtonText: {
+    color: colors.grayDark,
+    fontWeight: "bold",
+  },
+  container: {
+    backgroundColor: colors.grayLight,
+    borderBottomWidth: 1,
+    borderColor: colors.grayMedium,
+    flex: 1,
+  },
+  header: {
+    alignItems: "center",
+    backgroundColor: colors.white,
+    borderBottomWidth: 1,
+    borderColor: colors.grayMedium,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 25,
+    paddingVertical: 20,
+  },
+  info: {
+    color: colors.grayDark,
+    fontSize: 13,
+  },
+  title: {
+    color: colors.grayDark,
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  titleContainer: {
+    borderColor: colors.purple,
+    borderLeftWidth: 2,
+    paddingLeft: 10,
+  },
+});
 /**
  * Displays the list of tasks as well as buttons for performing
  * sync-related operations.
@@ -36,8 +80,8 @@ import {useSyncConnection} from '../hooks/useSyncConnection';
 export function TaskScreenSync() {
   const app = useApp();
   const user = useUser();
-  const {logOut} = useAuth();
-  const {isConnected, reconnect, disconnect} = useSyncConnection();
+  const { logOut } = useAuth();
+  const { isConnected, reconnect, disconnect } = useSyncConnection();
 
   return (
     <View style={styles.container}>
@@ -58,48 +102,3 @@ export function TaskScreenSync() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    borderBottomWidth: 1,
-    borderColor: colors.grayMedium,
-    backgroundColor: colors.grayLight,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 25,
-    paddingVertical: 20,
-    borderBottomWidth: 1,
-    borderColor: colors.grayMedium,
-    backgroundColor: colors.white,
-  },
-  titleContainer: {
-    paddingLeft: 10,
-    borderLeftWidth: 2,
-    borderColor: colors.purple,
-  },
-  title: {
-    marginBottom: 10,
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: colors.grayDark,
-  },
-  info: {
-    fontSize: 13,
-    color: colors.grayDark,
-  },
-  authButton: {
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    borderWidth: 1,
-    borderRadius: 25,
-    borderColor: colors.grayMedium,
-  },
-  authButtonText: {
-    fontWeight: 'bold',
-    color: colors.grayDark,
-  },
-});

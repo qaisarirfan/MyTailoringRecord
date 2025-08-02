@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,20 +14,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
-import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
-import type Realm from 'realm';
+import React from "react";
+import { FlatList, StyleSheet, View } from "react-native";
 
-import {Task} from '../models/Task';
-import {TaskItem} from './TaskItem';
+import { TaskItem } from "./TaskItem";
+import { Task } from "../models/Task";
+
+import type Realm from "realm";
 
 type TaskListProps = {
   tasks: Realm.Results<Task>;
   onToggleTaskStatus: (task: Task) => void;
   onDeleteTask: (task: Task) => void;
 };
+
+const styles = StyleSheet.create({
+  listContainer: {
+    flex: 1,
+  },
+});
 
 /**
  * Displays a list of tasks.
@@ -41,8 +48,8 @@ export function TaskList({
     <View style={styles.listContainer}>
       <FlatList
         data={tasks}
-        keyExtractor={task => task._id.toString()}
-        renderItem={({item: task}) => (
+        keyExtractor={(task) => task._id.toString()}
+        renderItem={({ item: task }) => (
           <TaskItem
             task={task}
             onToggleStatus={onToggleTaskStatus}
@@ -54,9 +61,3 @@ export function TaskList({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  listContainer: {
-    flex: 1,
-  },
-});

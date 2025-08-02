@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,21 +14,56 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
-import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-// @ts-ignore `openURLInBrowser` will open the url in your host's browser. This
-// is used for the purpose of this demo. For your own app, to open a URL on the
-// simulator/device, import {Linking} from 'react-native' and use Linking.openURL().
-import openURLInBrowser from 'react-native/Libraries/Core/Devtools/openURLInBrowser';
+import React from "react";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  Linking,
+  Alert,
+} from "react-native";
 
-import {colors} from '../styles/colors';
+import { colors } from "../styles/colors";
+
+const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+    marginHorizontal: 20,
+    marginTop: 50,
+  },
+  link: {
+    color: colors.purple,
+    fontWeight: "bold",
+  },
+  paragraph: {
+    color: colors.black,
+    fontSize: 17,
+    lineHeight: 22,
+    marginVertical: 10,
+    textAlign: "center",
+  },
+});
 
 /**
  * Information about this example app and the Atlas Device SDK for React Native.
  */
 export function IntroText() {
+  const handlePress = async (url: string) => {
+    // Checking if the link is supported for links with custom URL scheme.
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+      // by some browser in the mobile
+      await Linking.openURL(url);
+    } else {
+      Alert.alert(`Don't know how to open this URL: ${url}`);
+    }
+  };
+
   return (
     <View style={styles.content}>
       <Text style={styles.paragraph}>
@@ -45,12 +80,9 @@ export function IntroText() {
         accessibilityLabel="Open link"
         accessibilityHint="Opens a link to Atlas Device SDK in your browser"
         onPress={() =>
-          // Opens the link on the host's browser (used for this demo).
-          // Use `Linking.openURL()` to open on the simulator/device.
-          openURLInBrowser(
-            'https://www.mongodb.com/docs/realm/sdk/react-native/',
-          )
-        }>
+          handlePress("https://www.mongodb.com/docs/realm/sdk/react-native/")
+        }
+      >
         <Text style={[styles.paragraph, styles.link]}>
           Atlas Device SDK for React Native
         </Text>
@@ -59,31 +91,11 @@ export function IntroText() {
         accessibilityLabel="Open link"
         accessibilityHint="Opens a link to Atlas Device Sync in your browser"
         onPress={() =>
-          openURLInBrowser(
-            'https://www.mongodb.com/atlas/app-services/device-sync',
-          )
-        }>
+          handlePress("https://www.mongodb.com/atlas/app-services/device-sync")
+        }
+      >
         <Text style={[styles.paragraph, styles.link]}>Atlas Device Sync</Text>
       </Pressable>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    marginTop: 50,
-    marginHorizontal: 20,
-  },
-  paragraph: {
-    marginVertical: 10,
-    textAlign: 'center',
-    fontSize: 17,
-    lineHeight: 22,
-    color: colors.black,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: colors.purple,
-  },
-});

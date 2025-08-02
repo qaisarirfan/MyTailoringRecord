@@ -1,17 +1,14 @@
 import * as React from "react";
 import {
-  NativeModules,
-  Platform,
   ScrollView,
   ScrollViewProps,
-  StatusBar,
   StyleProp,
   StyleSheet,
   View,
   ViewStyle,
 } from "react-native";
-
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { useExampleTheme } from "../hooks/useExampleTheme";
 
 type Props = ScrollViewProps & {
@@ -20,6 +17,12 @@ type Props = ScrollViewProps & {
   style?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default function ScreenWrapper({
   children,
@@ -61,10 +64,3 @@ export default function ScreenWrapper({
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "red",
-  },
-});

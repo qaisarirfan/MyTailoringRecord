@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,13 +14,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
-import Config from 'react-native-config';
+import { Config } from "react-native-config";
 
 export const SYNC_CONFIG = {
   // Set `enabled` to `true` to enable sync.
   enabled: false,
   // Add your Atlas App ID here if sync is enabled.
-  appId: Config.ATLAS_APP_ID || 'YOUR_APP_ID',
+  appId: Config.ATLAS_APP_ID || "YOUR_APP_ID",
 };

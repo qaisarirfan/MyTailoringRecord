@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 //
 // Copyright 2023 Realm Inc.
 //
@@ -14,12 +14,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////
 
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-import {colors} from '../styles/colors';
+import { colors } from "../styles/colors";
+
+const styles = StyleSheet.create({
+  loading: {
+    alignItems: "center",
+    backgroundColor: colors.grayLight,
+    flex: 1,
+    justifyContent: "center",
+  },
+  text: {
+    color: colors.grayDark,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+});
 
 /**
  * Loading indicator.
@@ -31,17 +45,3 @@ export function Loading() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  loading: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.grayLight,
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: colors.grayDark,
-  },
-});
