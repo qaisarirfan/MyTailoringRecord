@@ -22,7 +22,10 @@ const AddMeasurementsRight = (props: any) => (
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    padding: 12,
+    padding: 16,
+  },
+  divider: {
+    marginVertical: 16,
   },
 });
 
@@ -48,7 +51,7 @@ const Dashboard = () => {
         />
       </Card>
 
-      <Divider />
+      <Divider style={styles.divider} />
 
       <Card mode="contained" onPress={() => navigate("Measurements")}>
         <Card.Title

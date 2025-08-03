@@ -19,14 +19,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     borderTopColor: colors.grayLight,
     borderTopWidth: 1,
-    padding: 20,
+    padding: 16,
   },
   container: {
     flex: 1,
   },
   content: {
     flex: 1,
-    padding: 20,
+    padding: 16,
   },
   errorText: {},
   saveButton: {},
@@ -85,7 +85,7 @@ const ShopType = () => {
           style={styles.saveButton}
           disabled={formik.isSubmitting}
         >
-          <Text>Save</Text>
+          Save
         </Button>
       </View>
     </SafeAreaView>

@@ -5,28 +5,35 @@ import React from "react";
 import AddCustomer from "./secure/add-customer";
 import Dashboard from "./secure/dashboard";
 import Measurements from "./secure/measurements";
+import RegisterShop from "./secure/register-shop";
 import ShopType from "./secure/shop-type";
+import { useShopManager } from "../hooks/useShopManager";
 
 export default () => {
   const Stack = createNativeStackNavigator();
+  const { shopExists } = useShopManager();
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
-          name="TaskScreen"
-          component={TaskScreen}
-          options={{ title: "Task" }}
-        /> */}
+        <>
+          {!shopExists && (
+            <Stack.Screen
+              name="RegisterShop"
+              component={RegisterShop}
+              options={{ title: "Shop" }}
+            />
+          )}
 
-        <Stack.Screen
-          name="ShopType"
-          component={ShopType}
-          options={{ title: "Shop Type" }}
-        />
-        <Stack.Screen name="Dashboard" component={Dashboard} />
-        <Stack.Screen name="Measurements" component={Measurements} />
-        <Stack.Screen name="AddCustomer" component={AddCustomer} />
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen
+            name="ShopType"
+            component={ShopType}
+            options={{ title: "Shop Type" }}
+          />
+          <Stack.Screen name="Measurements" component={Measurements} />
+          <Stack.Screen name="AddCustomer" component={AddCustomer} />
+        </>
       </Stack.Navigator>
     </NavigationContainer>
   );

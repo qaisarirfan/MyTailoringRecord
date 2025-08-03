@@ -20,8 +20,8 @@
 import "react-native-get-random-values";
 import React from "react";
 import { AppRegistry } from "react-native";
-import { AppNonSync } from "./app/AppNonSync";
 
+import { AppNonSync } from "./app/AppNonSync";
 import { AppSync } from "./app/AppSync";
 import { name as appName } from "./app.json";
 import { SYNC_CONFIG } from "./sync.config";
