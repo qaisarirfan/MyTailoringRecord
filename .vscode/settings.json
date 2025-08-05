@@ -38,5 +38,6 @@
   },
   "eslint.options": {
     "overrideConfigFile": "./.eslintrc.cjs"
-  }
+  },
+  "cSpell.words": ["kameez", "salwar"]
 }

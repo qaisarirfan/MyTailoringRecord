@@ -25,7 +25,6 @@ const InputLabel: React.FC<InputLabelProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 8,
     display: "flex",
     flexDirection: "row",
   },

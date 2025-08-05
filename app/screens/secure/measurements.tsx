@@ -10,32 +10,40 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Yup from "yup";
 
+import InputLabel from "../../components/InputLabel";
 import { colors } from "../../styles/colors";
 
 // Define interface for form values
 interface MeasurementsFields {
-  gender: string;
-  shoulder_width: number | null;
-  chest_bust: number | null;
-  waist: number | null;
-  hip: number | null;
-  kameez_length: number | null;
-  sleeve_length: number | null;
+  gender: "male" | "female";
   armhole: number | null;
-  upper_arm: number | null;
-  neck_depth_front: number | null;
+  bicep: number | null;
+  chest: number | null;
+  cuff_width: number | null;
+  hip: number | null;
+  kameez_back_length: number | null;
+  kameez_front_length: number | null;
+  kameez_length: number | null;
+  neck_circumference: number | null;
   neck_depth_back: number | null;
-  bust_point: number | null;
-  slit_length: number | null;
-  salwar_waist: number | null;
+  neck_depth_front: number | null;
+  shoulder_width: number | null;
+  side_slit_length: number | null;
+  sleeve_length: number | null;
+  waist: number | null;
+
+  ankle_width: number | null;
+  crotch_depth: number | null;
+  flare_width: number | null;
+  knee: number | null;
   salwar_hip: number | null;
   salwar_length: number | null;
+  salwar_waist: number | null;
   thigh: number | null;
-  knee: number | null;
-  ankle: number | null;
-  inseam: number | null;
-  dupatta_length: number | null;
-  dupatta_width: number | null;
+
+  bust: number | null;
+  shoulder_to_bust_point: number | null;
+  bust_point_to_bust_point: number | null;
 }
 
 // Define interface for input configurations
@@ -47,13 +55,15 @@ interface InputConfig {
 // Yup validation schema
 const validationSchema = [
   Yup.object().shape({
-    gender: Yup.string().required("Gender is required").oneOf(["Men", "Women"]),
+    gender: Yup.string()
+      .required("Gender is required")
+      .oneOf(["male", "female"]),
   }),
   Yup.object().shape({
     shoulder_width: Yup.number()
       .positive("Must be a positive number")
       .required("Required"),
-    chest_bust: Yup.number()
+    chest: Yup.number()
       .positive("Must be a positive number")
       .required("Required"),
     waist: Yup.number()
@@ -83,7 +93,7 @@ const validationSchema = [
     bust_point: Yup.number()
       .positive("Must be a positive number")
       .when("gender", ([gender], schema) => {
-        if (gender === "Women") {
+        if (gender === "female") {
           return schema.required("Required");
         }
         return schema.nullable();
@@ -127,42 +137,54 @@ const validationSchema = [
 
 // Initial form values
 const initialValues: MeasurementsFields = {
-  gender: __DEV__ ? "Men" : "",
-  shoulder_width: null,
-  chest_bust: null,
-  waist: null,
-  hip: null,
-  kameez_length: null,
-  sleeve_length: null,
+  gender: "male",
+
   armhole: null,
-  upper_arm: null,
-  neck_depth_front: null,
+  bicep: null,
+  chest: null,
+  cuff_width: null,
+  hip: null,
+  kameez_back_length: null,
+  kameez_front_length: null,
+  kameez_length: null,
+  neck_circumference: null,
   neck_depth_back: null,
-  bust_point: null,
-  slit_length: null,
-  salwar_waist: null,
+  neck_depth_front: null,
+  shoulder_width: null,
+  side_slit_length: null,
+  sleeve_length: null,
+  waist: null,
+
+  ankle_width: null,
+  crotch_depth: null,
+  flare_width: null,
+  knee: null,
   salwar_hip: null,
   salwar_length: null,
+  salwar_waist: null,
   thigh: null,
-  knee: null,
-  ankle: null,
-  inseam: null,
-  dupatta_length: null,
-  dupatta_width: null,
+
+  // woman kameez
+  bust: null,
+  shoulder_to_bust_point: null,
+  bust_point_to_bust_point: null,
+
+  // woman salwar
 };
 
 // Input configurations with icons and helper text
-const inputConfigs: Record<
-  keyof Omit<MeasurementsFields, "gender">,
-  InputConfig
-> = {
+const inputConfigs: Record<keyof MeasurementsFields, InputConfig> = {
+  gender: {
+    icon: "",
+    helperText: "",
+  },
   shoulder_width: {
     icon: "human",
     helperText: "Measure across the back from shoulder to shoulder",
   },
-  chest_bust: {
+  chest: {
     icon: "tshirt-crew",
-    helperText: "Measure around the fullest part of chest/bust",
+    helperText: "Measure around the fullest part of chest",
   },
   waist: {
     icon: "human",
@@ -184,7 +206,7 @@ const inputConfigs: Record<
     icon: "arm-flex",
     helperText: "Measure around the arm at shoulder joint",
   },
-  upper_arm: {
+  bicep: {
     icon: "arm-flex",
     helperText: "Measure around the fullest part of upper arm",
   },
@@ -196,11 +218,7 @@ const inputConfigs: Record<
     icon: "collar",
     helperText: "Measure from shoulder to desired back neck depth",
   },
-  bust_point: {
-    icon: "human-female",
-    helperText: "Measure from shoulder to fullest part of bust",
-  },
-  slit_length: {
+  side_slit_length: {
     icon: "ruler",
     helperText: "Measure from waist to desired slit length",
   },
@@ -221,15 +239,42 @@ const inputConfigs: Record<
     helperText: "Measure around the fullest part of thigh",
   },
   knee: { icon: "human", helperText: "Measure around the knee" },
-  ankle: { icon: "human", helperText: "Measure around the ankle" },
-  inseam: { icon: "ruler", helperText: "Measure from crotch to ankle" },
-  dupatta_length: {
+  ankle_width: { icon: "human", helperText: "Measure around the ankle" },
+  cuff_width: {
     icon: "ruler",
-    helperText: "Measure desired length of dupatta",
+    helperText: "Measure around the wrist for cuff fitting",
   },
-  dupatta_width: {
+  neck_circumference: {
+    icon: "collar",
+    helperText: "Measure around the base of the neck",
+  },
+  kameez_back_length: {
     icon: "ruler",
-    helperText: "Measure desired width of dupatta",
+    helperText: "Measure from back shoulder to kameez bottom",
+  },
+  kameez_front_length: {
+    icon: "ruler",
+    helperText: "Measure from front shoulder to kameez bottom",
+  },
+  bust: {
+    icon: "tshirt-crew",
+    helperText: "Measure around the fullest part of the bust",
+  },
+  shoulder_to_bust_point: {
+    icon: "arrow-down",
+    helperText: "Measure vertically from shoulder to bust apex",
+  },
+  bust_point_to_bust_point: {
+    icon: "arrow-left-right",
+    helperText: "Measure horizontally between bust apex points",
+  },
+  crotch_depth: {
+    icon: "ruler",
+    helperText: "Measure from waist to crotch while seated",
+  },
+  flare_width: {
+    icon: "expand",
+    helperText: "Measure the hem width of the kameez (if flared)",
   },
 };
 
@@ -281,8 +326,11 @@ const renderInput = (
   placeholder: string
 ) => (
   <View style={styles.inputContainer}>
+    <InputLabel label={`${label} (inches)`} />
+    <HelperText padding="none" type="info" variant="bodySmall">
+      {inputConfigs[name]?.helperText}
+    </HelperText>
     <TextInput
-      label={`${label} (inches)`}
       value={formik.values[name]?.toString()}
       onChangeText={formik.handleChange(name)}
       onBlur={formik.handleBlur(name)}
@@ -293,20 +341,16 @@ const renderInput = (
       error={formik.touched[name] && !!formik.errors[name]}
       left={
         <TextInput.Icon
-          icon={() => (
-            <Icon
-              name={name !== "gender" ? inputConfigs[name]?.icon : ""}
-              size={20}
-            />
-          )}
+          icon={() => <Icon name={inputConfigs[name]?.icon} size={20} />}
         />
       }
     />
     <HelperText
-      type={formik.touched[name] && formik.errors[name] ? "error" : "info"}
+      visible={formik.touched[name] && !!formik.errors[name]}
+      type={"error"}
+      padding="none"
     >
-      {formik.errors[name] ??
-        (name !== "gender" ? inputConfigs[name]?.helperText : null)}
+      {formik.errors[name]}
     </HelperText>
   </View>
 );
@@ -331,8 +375,6 @@ const Measurements = () => {
       {(formik) => {
         return (
           <ScrollView style={styles.container}>
-            <Text style={styles.title}>Salwar Kameez Measurement</Text>
-
             {/* Step 1: Gender Selection */}
             {step === 1 && (
               <View style={styles.section}>
@@ -341,8 +383,8 @@ const Measurements = () => {
                   value={formik.values.gender}
                   onValueChange={formik.handleChange("gender")}
                   buttons={[
-                    { value: "Women", label: "Women", icon: "human-female" },
-                    { value: "Men", label: "Men", icon: "human-male" },
+                    { value: "female", label: "Female", icon: "human-female" },
+                    { value: "male", label: "Male", icon: "human-male" },
                   ]}
                   style={styles.segmentedButtons}
                 />
@@ -363,11 +405,7 @@ const Measurements = () => {
             {/* Step 2: Kameez/Kurta Measurements */}
             {step === 2 && (
               <View style={styles.section}>
-                <Text style={styles.sectionTitle}>
-                  {formik.values.gender === "Women"
-                    ? "Kurta Measurements"
-                    : "Kameez Measurements"}
-                </Text>
+                <Text style={styles.sectionTitle}>Kameez</Text>
                 {renderInput(
                   formik,
                   "Shoulder Width",
@@ -376,32 +414,9 @@ const Measurements = () => {
                 )}
                 {renderInput(
                   formik,
-                  formik.values.gender === "Women" ? "Bust" : "Chest",
-                  "chest_bust",
-                  "e.g., 36"
-                )}
-                {renderInput(formik, "Waist", "waist", "e.g., 30")}
-                {renderInput(formik, "Hip", "hip", "e.g., 38")}
-                {renderInput(
-                  formik,
-                  formik.values.gender === "Women"
-                    ? "Kameez Length"
-                    : "Kurta Length",
-                  "kameez_length",
-                  "e.g., 40"
-                )}
-                {renderInput(
-                  formik,
-                  "Sleeve Length",
-                  "sleeve_length",
-                  "e.g., 16"
-                )}
-                {renderInput(formik, "Armhole", "armhole", "e.g., 16")}
-                {renderInput(
-                  formik,
-                  "Upper Arm Circumference",
-                  "upper_arm",
-                  "e.g., 12"
+                  "Neck Circumference",
+                  "neck_circumference",
+                  "e.g., 6"
                 )}
                 {renderInput(
                   formik,
@@ -415,23 +430,78 @@ const Measurements = () => {
                   "neck_depth_back",
                   "e.g., 4"
                 )}
-                {formik.values.gender === "Women" &&
-                  renderInput(formik, "Bust Point", "bust_point", "e.g., 10")}
-                {renderInput(formik, "Slit Length", "slit_length", "e.g., 12")}
+                {renderInput(formik, "Bicep", "bicep", "e.g., 12")}
+                {renderInput(formik, "Armhole", "armhole", "e.g., 16")}
+                {renderInput(
+                  formik,
+                  "Sleeve Length",
+                  "sleeve_length",
+                  "e.g., 16"
+                )}
+                {renderInput(formik, "Cuff Width", "cuff_width", "e.g., 14")}
+                {renderInput(
+                  formik,
+                  formik.values.gender === "female" ? "Bust" : "Chest",
+                  formik.values.gender === "female" ? "bust" : "chest",
+                  "e.g., 36"
+                )}
+                {formik.values.gender === "female" &&
+                  renderInput(
+                    formik,
+                    "Shoulder To Bust Point",
+                    "shoulder_to_bust_point",
+                    "e.g., 30"
+                  )}
+                {formik.values.gender === "female" &&
+                  renderInput(
+                    formik,
+                    "Bust Point To Bust Point",
+                    "bust_point_to_bust_point",
+                    "e.g., 30"
+                  )}
+                {renderInput(formik, "Waist", "waist", "e.g., 30")}
+                {renderInput(formik, "Hip", "hip", "e.g., 38")}
+                {renderInput(
+                  formik,
+                  "Kameez Length",
+                  "kameez_length",
+                  "e.g., 40"
+                )}
+                {renderInput(
+                  formik,
+                  "Kameez Front Length",
+                  "kameez_front_length",
+                  "e.g., 40"
+                )}
+
+                {renderInput(
+                  formik,
+                  "Kameez Back Length",
+                  "kameez_back_length",
+                  "e.g., 40"
+                )}
+                {renderInput(
+                  formik,
+                  "Slit Length",
+                  "side_slit_length",
+                  "e.g., 12"
+                )}
+                {renderInput(formik, "Flare Width", "flare_width", "e.g., 12")}
               </View>
             )}
 
             {/* Step 3: Salwar Measurements */}
             {step === 3 && (
               <View style={styles.section}>
-                <Text style={styles.sectionTitle}>
-                  {formik.values.gender === "Women"
-                    ? "Salwar/Churidar Measurements"
-                    : "Salwar Measurements"}
-                </Text>
+                <Text style={styles.sectionTitle}>Salwar</Text>
                 {renderInput(formik, "Waist", "salwar_waist", "e.g., 30")}
                 {renderInput(formik, "Hip", "salwar_hip", "e.g., 38")}
-                {renderInput(formik, "Length", "salwar_length", "e.g., 38")}
+                {renderInput(
+                  formik,
+                  "Crotch Depth",
+                  "crotch_depth",
+                  "e.g., 38"
+                )}
                 {renderInput(
                   formik,
                   "Thigh Circumference",
@@ -439,13 +509,13 @@ const Measurements = () => {
                   "e.g., 22"
                 )}
                 {renderInput(formik, "Knee Circumference", "knee", "e.g., 14")}
+                {renderInput(formik, "Length", "salwar_length", "e.g., 38")}
                 {renderInput(
                   formik,
                   "Ankle Circumference",
-                  "ankle",
+                  "ankle_width",
                   "e.g., 10"
                 )}
-                {renderInput(formik, "Inseam", "inseam", "e.g., 30")}
               </View>
             )}
 
@@ -455,18 +525,6 @@ const Measurements = () => {
                 <Text style={styles.sectionTitle}>
                   Dupatta Measurements (Optional)
                 </Text>
-                {renderInput(
-                  formik,
-                  "Dupatta Length",
-                  "dupatta_length",
-                  "e.g., 90"
-                )}
-                {renderInput(
-                  formik,
-                  "Dupatta Width",
-                  "dupatta_width",
-                  "e.g., 40"
-                )}
               </View>
             )}
 

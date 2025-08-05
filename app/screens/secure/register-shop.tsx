@@ -1,4 +1,4 @@
-import { FormikHelpers, useFormik } from "formik";
+import { useFormik } from "formik";
 import { PhoneNumberUtil } from "google-libphonenumber";
 import React from "react";
 import { View, StyleSheet, Alert, ScrollView } from "react-native";
@@ -51,10 +51,7 @@ const RegisterShop: React.FC = () => {
       shop_type: currentShop?.shop_type ?? "",
     },
     validationSchema: validationSchema,
-    onSubmit: (
-      values: FormValues,
-      formikHelpers: FormikHelpers<FormValues>
-    ) => {
+    onSubmit: (values, formikHelpers) => {
       try {
         addShop({
           shop_name: values.shop_name,

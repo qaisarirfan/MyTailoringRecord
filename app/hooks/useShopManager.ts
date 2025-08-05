@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import Realm from "realm";
 
 import { Shop } from "../models/Shop";
+import { formatMobileNumber } from "../utils/utility";
 
 /**
  * Provides functions for managing a single shop entry in Realm,
@@ -39,7 +40,7 @@ export function useShopManager() {
           realm.create(Shop, {
             shop_name: shopData.shop_name,
             owner_name: shopData.owner_name,
-            mobile: shopData.mobile,
+            mobile: formatMobileNumber(shopData.mobile),
             shop_type: shopData.shop_type,
           });
         });
@@ -90,7 +91,6 @@ export function useShopManager() {
           currentShop.shop_type =
             updatedData.shop_type ?? currentShop.shop_type;
           currentShop.updateAt = new Date(); // Update the timestamp
-          // Note: currentShop.mobile is intentionally NOT updated here
         });
         return true; // Shop updated successfully
       } catch (error) {

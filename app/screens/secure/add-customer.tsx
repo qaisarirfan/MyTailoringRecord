@@ -1,33 +1,25 @@
 import { useFormik } from "formik";
 import { PhoneNumberUtil } from "google-libphonenumber";
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import { TextInput, Button, Text, HelperText } from "react-native-paper";
+import { View, StyleSheet, Alert } from "react-native";
+import { TextInput, Button, HelperText } from "react-native-paper";
 import * as Yup from "yup";
+
+import InputLabel from "../../components/InputLabel";
+import { useCustomerManager } from "../../hooks/useCustomerManager";
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
 const styles = StyleSheet.create({
-  button: {
-    marginTop: 16,
-  },
   container: {
     flex: 1,
     padding: 16,
   },
-  error: {
-    marginBottom: 8,
-  },
-  input: {},
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 24,
-    textAlign: "center",
-  },
 });
 
 const AddCustomer = () => {
+  const { addCustomer } = useCustomerManager();
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -36,7 +28,7 @@ const AddCustomer = () => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .required("Name is required")
+        .required("Customer name is required")
         .min(2, "Name must be at least 2 characters"),
       mobile: Yup.string()
         .required("Mobile number is required")
@@ -54,51 +46,64 @@ const AddCustomer = () => {
         ),
       address: Yup.string().max(200, "Address must not exceed 200 characters"),
     }),
-    onSubmit: (values) => {
-      // Handle form submission
-      console.log("Form submitted with values:", values);
-      // Add your API call or navigation logic here
+    onSubmit: (values, formikHelpers) => {
+      formikHelpers.resetForm();
+
+      try {
+        addCustomer({
+          customer_name: values.name,
+          mobile: values.mobile,
+          address: values.address,
+        });
+
+        formikHelpers.resetForm();
+        Alert.alert("Success", "Customer added successfully!");
+      } catch (error) {
+        if (error instanceof Error) {
+          Alert.alert(error.message);
+        } else {
+          Alert.alert(String(error));
+        }
+      }
     },
   });
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Add New Customer</Text>
-
+      <InputLabel isRequired label="Name" />
       <TextInput
-        label="Name"
         value={formik.values.name}
         onChangeText={formik.handleChange("name")}
         onBlur={formik.handleBlur("name")}
         error={formik.touched.name && !!formik.errors.name}
         mode="outlined"
-        style={styles.input}
       />
-      {formik.touched.name && formik.errors.name && (
-        <HelperText type="error" style={styles.error}>
-          {formik.errors.name}
-        </HelperText>
-      )}
+      <HelperText
+        type="error"
+        visible={formik.touched.name && !!formik.errors.name}
+      >
+        {formik.errors.name}
+      </HelperText>
 
+      <InputLabel isRequired label="Mobile" />
       <TextInput
-        label="Mobile (+92)"
         value={formik.values.mobile}
         onChangeText={formik.handleChange("mobile")}
         onBlur={formik.handleBlur("mobile")}
         error={formik.touched.mobile && !!formik.errors.mobile}
         mode="outlined"
         keyboardType="phone-pad"
-        style={styles.input}
         placeholder="+923001234567"
       />
-      {formik.touched.mobile && formik.errors.mobile && (
-        <HelperText type="error" style={styles.error}>
-          {formik.errors.mobile}
-        </HelperText>
-      )}
+      <HelperText
+        type="error"
+        visible={formik.touched.mobile && !!formik.errors.mobile}
+      >
+        {formik.errors.mobile}
+      </HelperText>
 
+      <InputLabel label="Address" />
       <TextInput
-        label="Address"
         value={formik.values.address}
         onChangeText={formik.handleChange("address")}
         onBlur={formik.handleBlur("address")}
@@ -106,21 +111,16 @@ const AddCustomer = () => {
         mode="outlined"
         multiline
         numberOfLines={3}
-        style={styles.input}
       />
-      {formik.touched.address && formik.errors.address && (
-        <HelperText type="error" style={styles.error}>
-          {formik.errors.address}
-        </HelperText>
-      )}
-
-      <Button
-        mode="contained"
-        onPress={() => formik.handleSubmit()}
-        style={styles.button}
-        disabled={!formik.isValid || formik.isSubmitting}
+      <HelperText
+        type="error"
+        visible={formik.touched.address && !!formik.errors.address}
       >
-        <Text>Add Customer</Text>
+        {formik.errors.address}
+      </HelperText>
+
+      <Button mode="contained" onPress={() => formik.handleSubmit()}>
+        Add Customer
       </Button>
     </View>
   );
