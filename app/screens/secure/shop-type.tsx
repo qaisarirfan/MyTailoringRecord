@@ -1,5 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useFormik } from "formik";
 import React from "react";
 import { View, StyleSheet, SafeAreaView } from "react-native";
@@ -11,9 +9,9 @@ import {
   HelperText,
 } from "react-native-paper";
 import * as Yup from "yup";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { colors } from "../../styles/colors";
+import { useAppNavigation } from "../../hooks/useNavigation";
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -37,8 +35,7 @@ const styles = StyleSheet.create({
 });
 
 const ShopType = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<{ Dashboard: undefined }>>();
+  const navigation = useAppNavigation();
   const formik = useFormik({
     initialValues: {
       shop_type: "",

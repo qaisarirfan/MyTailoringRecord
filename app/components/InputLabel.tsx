@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "row",
+    marginBottom: 8,
   },
   label: {
     fontSize: 14,

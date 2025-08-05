@@ -27,7 +27,7 @@ export function useCustomerManager() {
   const customers = useQuery(
     Customer,
     (collection) => {
-      let filteredCollection = collection.sorted("createdAt", false);
+      let filteredCollection = collection.sorted("createdAt", true);
 
       // Apply search term filter (case-insensitive search on name and mobile)
       if (searchTerm) {
@@ -199,6 +199,19 @@ export function useCustomerManager() {
     [realm]
   );
 
+  /**
+   * Retrieves a single customer record by its ObjectId.
+   *
+   * @param customerId The ObjectId of the customer to retrieve.
+   * @returns The Customer object if found, otherwise undefined.
+   */
+  const getCustomerById = useCallback(
+    (customerId: BSON.ObjectId): Customer | null => {
+      return realm.objectForPrimaryKey(Customer, customerId);
+    },
+    [realm]
+  );
+
   return {
     customers,
     currentShop, // Exposing the shop in case it's needed for context
@@ -208,5 +221,6 @@ export function useCustomerManager() {
     deleteCustomer,
     searchCustomers, // New search function
     clearFilters, // New function to clear filters
+    getCustomerById, // ✨ New function to get a single customer by ID
   };
 }

@@ -7,6 +7,7 @@ import * as Yup from "yup";
 
 import InputLabel from "../../components/InputLabel";
 import { useCustomerManager } from "../../hooks/useCustomerManager";
+import { useAppNavigation } from "../../hooks/useNavigation";
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -18,6 +19,7 @@ const styles = StyleSheet.create({
 });
 
 const AddCustomer = () => {
+  const { navigate } = useAppNavigation();
   const { addCustomer } = useCustomerManager();
 
   const formik = useFormik({
@@ -47,8 +49,6 @@ const AddCustomer = () => {
       address: Yup.string().max(200, "Address must not exceed 200 characters"),
     }),
     onSubmit: (values, formikHelpers) => {
-      formikHelpers.resetForm();
-
       try {
         addCustomer({
           customer_name: values.name,
@@ -58,6 +58,7 @@ const AddCustomer = () => {
 
         formikHelpers.resetForm();
         Alert.alert("Success", "Customer added successfully!");
+        navigate("CustomerList");
       } catch (error) {
         if (error instanceof Error) {
           Alert.alert(error.message);

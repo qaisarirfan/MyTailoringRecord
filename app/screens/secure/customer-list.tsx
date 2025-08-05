@@ -1,6 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import {
   FlatList,
   View,
@@ -19,17 +17,24 @@ import {
 
 import { useCustomerManager } from "../../hooks/useCustomerManager";
 import { Customer } from "../../models/Customer";
+import { useAppNavigation } from "../../hooks/useNavigation";
 
-type NavigationProp = NativeStackNavigationProp<{ AddCustomer: undefined }>;
-
-const RenderItem = ({ item }: { item: Customer }) => (
-  <Card style={styles.card} mode="contained">
-    <Card.Title
-      title={item.customer_name}
-      subtitle={`${item.mobile} • ${item.createdAt.toLocaleDateString()}`}
-    />
-  </Card>
-);
+const RenderItem = ({
+  item,
+  onPress,
+}: {
+  item: Customer;
+  onPress: () => void;
+}) => {
+  return (
+    <Card style={styles.card} mode="contained" onPress={onPress}>
+      <Card.Title
+        title={item.customer_name}
+        subtitle={`${item.mobile} • ${item.createdAt.toLocaleDateString()}`}
+      />
+    </Card>
+  );
+};
 
 const SearchRight = () => {
   const { clearFilters } = useCustomerManager();
@@ -45,20 +50,22 @@ const SearchRight = () => {
 };
 
 const CustomerList = () => {
-  const navigation = useNavigation<NavigationProp>();
+  const navigation = useAppNavigation();
   const { customers, searchCustomers, searchTerm } = useCustomerManager();
 
-  navigation.setOptions({
-    headerRight: () => (
-      <Button
-        mode="text"
-        icon="plus"
-        onPress={() => navigation.navigate("AddCustomer")}
-      >
-        Add
-      </Button>
-    ),
-  });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          mode="text"
+          icon="plus"
+          onPress={() => navigation.navigate("AddCustomer")}
+        >
+          Add
+        </Button>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -77,7 +84,16 @@ const CustomerList = () => {
           <FlatList
             data={customers}
             keyExtractor={(item) => item._id.toHexString()}
-            renderItem={RenderItem}
+            renderItem={({ item }) => (
+              <RenderItem
+                item={item}
+                onPress={() =>
+                  navigation.navigate("CustomerDetail", {
+                    customerId: item._id.toHexString(),
+                  })
+                }
+              />
+            )}
             contentContainerStyle={styles.flatListContent}
           />
         )}

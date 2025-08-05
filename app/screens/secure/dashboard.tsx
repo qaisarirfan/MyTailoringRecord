@@ -1,12 +1,10 @@
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
 import { Avatar, Card, IconButton, Divider } from "react-native-paper";
 
 import { useShopManager } from "../../hooks/useShopManager";
+import { useAppNavigation } from "../../hooks/useNavigation";
 
-// Define reusable left and right components
 const AddCustomerLeft = (props: any) => (
   <Avatar.Icon {...props} icon="face-man" />
 );
@@ -31,13 +29,8 @@ const styles = StyleSheet.create({
 
 const Dashboard = () => {
   const { currentShop } = useShopManager();
-  const { navigate } = useNavigation<
-    NativeStackNavigationProp<{
-      AddCustomer: undefined;
-      Measurements: undefined;
-      CustomerList: undefined;
-    }>
-  >();
+
+  const { navigate } = useAppNavigation();
 
   return (
     <ScrollView
@@ -68,7 +61,6 @@ const Dashboard = () => {
           title="Customers"
           subtitle="Card Subtitle"
           left={AddCustomerLeft}
-          right={AddMeasurementsRight}
         />
       </Card>
 
