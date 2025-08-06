@@ -98,12 +98,13 @@ export function useCustomerManager() {
 
       try {
         realm.write(() => {
-          realm.create(Customer, {
+          const result = realm.create(Customer, {
             customer_name: customerData.customer_name,
             mobile: formatMobileNumber(customerData.mobile),
             address: customerData.address,
             shop: currentShop, // Automatically link the customer to the existing shop
           });
+          currentShop.customers.push(result);
         });
       } catch (error) {
         if (error instanceof Realm.AssertionError) {

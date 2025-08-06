@@ -3,13 +3,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 
 import AddCustomer from "./secure/add-customer";
+import AddMeasurement from "./secure/add-measurement";
+import CustomerDetail from "./secure/customer-detail";
 import Dashboard from "./secure/dashboard";
-import Measurements from "./secure/measurements";
 import RegisterShop from "./secure/register-shop";
 import ShopType from "./secure/shop-type";
 import { useShopManager } from "../hooks/useShopManager";
 import CustomerList from "./secure/customer-list";
-import CustomerDetail from "./secure/customer-detail";
 
 export default () => {
   const Stack = createNativeStackNavigator();
@@ -37,7 +37,11 @@ export default () => {
           component={ShopType}
           options={{ title: "Shop Type" }}
         />
-        <Stack.Screen name="AddMeasurement" component={Measurements} />
+        <Stack.Screen
+          name="AddMeasurement"
+          component={AddMeasurement}
+          options={{ title: "Measurement" }}
+        />
         <Stack.Screen
           name="AddCustomer"
           component={AddCustomer}

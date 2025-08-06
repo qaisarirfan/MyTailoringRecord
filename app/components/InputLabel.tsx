@@ -1,20 +1,22 @@
 import React from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, StyleProp, ViewStyle } from "react-native";
 import { useTheme } from "react-native-paper";
 
 interface InputLabelProps {
   label: string;
   isRequired?: boolean;
+  style?: StyleProp<ViewStyle>;
 }
 
 const InputLabel: React.FC<InputLabelProps> = ({
   label,
   isRequired = false,
+  style,
 }) => {
   const theme = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Text style={[styles.label]}>{label}</Text>
       {isRequired && (
         <Text style={[styles.asterisk, { color: theme.colors.error }]}>*</Text>

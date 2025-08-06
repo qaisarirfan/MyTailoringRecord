@@ -10,8 +10,8 @@ import {
 } from "react-native-paper";
 import * as Yup from "yup";
 
-import { colors } from "../../styles/colors";
 import { useAppNavigation } from "../../hooks/useNavigation";
+import { colors } from "../../styles/colors";
 
 const styles = StyleSheet.create({
   buttonContainer: {

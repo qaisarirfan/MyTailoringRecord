@@ -2,8 +2,8 @@ import React from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
 import { Avatar, Card, IconButton, Divider } from "react-native-paper";
 
-import { useShopManager } from "../../hooks/useShopManager";
 import { useAppNavigation } from "../../hooks/useNavigation";
+import { useShopManager } from "../../hooks/useShopManager";
 
 const AddCustomerLeft = (props: any) => (
   <Avatar.Icon {...props} icon="face-man" />
@@ -66,7 +66,10 @@ const Dashboard = () => {
 
       <Divider style={styles.divider} />
 
-      <Card mode="contained" onPress={() => navigate("Measurements")}>
+      <Card
+        mode="contained"
+        onPress={() => navigate("AddMeasurement", { customerId: "" })}
+      >
         <Card.Title
           title="Add measurements"
           subtitle="Card Subtitle"

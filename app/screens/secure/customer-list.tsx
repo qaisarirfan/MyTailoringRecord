@@ -16,8 +16,8 @@ import {
 } from "react-native-paper";
 
 import { useCustomerManager } from "../../hooks/useCustomerManager";
-import { Customer } from "../../models/Customer";
 import { useAppNavigation } from "../../hooks/useNavigation";
+import { Customer } from "../../models/Customer";
 
 const RenderItem = ({
   item,

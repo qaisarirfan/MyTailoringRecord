@@ -1,12 +1,14 @@
+import { RouteProp, useRoute } from "@react-navigation/native";
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { Text, FAB, Card, Divider } from "react-native-paper";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { ObjectId } from "bson";
+import { Text, Card, Divider, Button } from "react-native-paper";
+import { BSON } from "realm";
 
-import { useCustomerManager } from "../../hooks/useCustomerManager";
-import { useAppNavigation } from "../../hooks/useNavigation";
 import InputLabel from "../../components/InputLabel";
+import { MeasurementFields } from "../../components/MeasurementForm/types";
+import { useCustomerManager } from "../../hooks/useCustomerManager";
+import { useMeasurementManager } from "../../hooks/useMeasurementManager";
+import { useAppNavigation } from "../../hooks/useNavigation";
 
 type ParamList = {
   CustomerDetail: {
@@ -14,13 +16,87 @@ type ParamList = {
   };
 };
 
+const renderMeasurementGrid = (measurement: MeasurementFields) => {
+  const commonKameezFields = [
+    "shoulder_width",
+    "neck_circumference",
+    "neck_depth_front",
+    "neck_depth_back",
+    "armhole",
+    "bicep",
+    "sleeve_length",
+    "cuff_width",
+    "chest",
+    "waist",
+    "hip",
+    "kameez_length",
+    "kameez_front_length",
+    "kameez_back_length",
+    "side_slit_length",
+    "flare_width",
+  ];
+
+  const salwarFields = [
+    "salwar_waist",
+    "salwar_hip",
+    "crotch_depth",
+    "thigh",
+    "knee",
+    "salwar_length",
+    "ankle_width",
+  ];
+
+  const femaleOnlyFields = [
+    "bust",
+    "shoulder_to_bust_point",
+    "bust_point_to_bust_point",
+  ];
+
+  const renderGridItems = (fields: string[]) =>
+    fields.map((key) => {
+      const value = measurement[key as keyof MeasurementFields];
+
+      if (!value) return null;
+      return (
+        <View key={key} style={styles.gridItem}>
+          <Text style={styles.gridLabel}>{key.replace(/_/g, " ")}</Text>
+          <Text style={styles.gridValue}>{value}</Text>
+        </View>
+      );
+    });
+
+  return (
+    <View>
+      <Text style={styles.sectionHeader}>Kameez Measurements</Text>
+      <View style={styles.gridContainer}>
+        {renderGridItems(commonKameezFields)}
+      </View>
+      {measurement.gender === "female" && (
+        <>
+          <Text style={styles.sectionHeader}>Bust Measurements</Text>
+          <View style={styles.gridContainer}>
+            {renderGridItems(femaleOnlyFields)}
+          </View>
+        </>
+      )}
+      <Text style={styles.sectionHeader}>Salwar Measurements</Text>
+      <View style={styles.gridContainer}>{renderGridItems(salwarFields)}</View>
+    </View>
+  );
+};
+
 const CustomerDetail = () => {
   const route = useRoute<RouteProp<ParamList, "CustomerDetail">>();
   const navigation = useAppNavigation();
 
   const { getCustomerById } = useCustomerManager();
+  const { getMeasurementsForCustomer } = useMeasurementManager();
 
-  const customer = getCustomerById(new ObjectId(route.params.customerId));
+  const customer = getCustomerById(new BSON.ObjectId(route.params.customerId));
+
+  const measurement = getMeasurementsForCustomer(
+    new BSON.ObjectId(route.params.customerId)
+  );
 
   const handleAddMeasurement = () => {
     navigation.navigate("AddMeasurement", {
@@ -37,22 +113,31 @@ const CustomerDetail = () => {
             <Text>{customer?.customer_name || "-"}</Text>
             <Divider />
             <InputLabel label="Mobile" />
-            <Text>{customer?.mobile || "-"}</Text>
+            <Text selectable>{customer?.mobile || "-"}</Text>
             <Divider />
             <InputLabel label="Address" />
             <Text>{customer?.address || "-"}</Text>
           </Card.Content>
         </Card>
+        {!measurement ? (
+          <Button
+            icon="tape-measure"
+            mode="contained"
+            onPress={handleAddMeasurement}
+          >
+            Add Measurement
+          </Button>
+        ) : (
+          <Button
+            icon="tape-measure"
+            mode="contained"
+            onPress={handleAddMeasurement}
+          >
+            Update Measurement
+          </Button>
+        )}
+        {measurement && renderMeasurementGrid(measurement)}
       </ScrollView>
-
-      <FAB
-        icon="tape-measure"
-        label="Add Measurement"
-        onPress={handleAddMeasurement}
-        style={[styles.fab]}
-        mode="flat"
-        variant="primary"
-      />
     </View>
   );
 };
@@ -64,12 +149,35 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 16,
   },
-  card: {},
+  card: { marginBottom: 16 },
   section: {},
-  fab: {
-    position: "absolute",
-    right: 16,
-    bottom: 24,
+  gridContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 16,
+  },
+  gridItem: {
+    width: "48%",
+    backgroundColor: "#f9f9f9",
+    padding: 8,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+  gridLabel: {
+    fontSize: 12,
+    color: "#555",
+  },
+  gridValue: {
+    fontWeight: "bold",
+    fontSize: 14,
+    color: "#000",
+  },
+  sectionHeader: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginVertical: 12,
   },
 });
 

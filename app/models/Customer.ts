@@ -1,7 +1,7 @@
 import Realm, { BSON } from "realm";
 
-import { Shop } from "./Shop";
 import { Measurement } from "./Measurement";
+import { Shop } from "./Shop";
 
 export class Customer extends Realm.Object {
   _id: BSON.ObjectId = new BSON.ObjectId();
