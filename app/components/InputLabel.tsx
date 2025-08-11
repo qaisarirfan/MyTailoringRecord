@@ -1,6 +1,6 @@
 import React from "react";
-import { Text, StyleSheet, View, StyleProp, ViewStyle } from "react-native";
-import { useTheme } from "react-native-paper";
+import { StyleSheet, View, StyleProp, ViewStyle } from "react-native";
+import { useTheme, Text } from "react-native-paper";
 
 interface InputLabelProps {
   label: string;
@@ -17,7 +17,9 @@ const InputLabel: React.FC<InputLabelProps> = ({
 
   return (
     <View style={[styles.container, style]}>
-      <Text style={[styles.label]}>{label}</Text>
+      <Text variant="labelLarge" style={[styles.label]}>
+        {label}
+      </Text>
       {isRequired && (
         <Text style={[styles.asterisk, { color: theme.colors.error }]}>*</Text>
       )}
@@ -32,7 +34,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   label: {
-    fontSize: 14,
     fontWeight: "600",
     color: "#333",
   },

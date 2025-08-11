@@ -9,6 +9,7 @@ export type RootStackParamList = {
   Measurements: undefined;
   RegisterShop: undefined;
   ShopType: undefined;
+  AdditionalCustomizationOptions: { customerId: string };
 };
 
 export type RootStackNavigationProp = NavigationProp<RootStackParamList>;

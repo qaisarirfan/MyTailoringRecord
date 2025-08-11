@@ -4,6 +4,7 @@ import React from "react";
 
 import AddCustomer from "./secure/add-customer";
 import AddMeasurement from "./secure/add-measurement";
+import AdditionalCustomizationOptions from "./secure/additional-customization-options";
 import CustomerDetail from "./secure/customer-detail";
 import Dashboard from "./secure/dashboard";
 import RegisterShop from "./secure/register-shop";
@@ -51,6 +52,11 @@ export default () => {
           name="CustomerDetail"
           component={CustomerDetail}
           options={{ title: "Customer" }}
+        />
+        <Stack.Screen
+          name="AdditionalCustomizationOptions"
+          component={AdditionalCustomizationOptions}
+          options={{ title: "Additional Customization Options" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

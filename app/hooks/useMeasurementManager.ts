@@ -161,41 +161,17 @@ export function useMeasurementManager() {
 
       try {
         realm.write(() => {
+          const sanitized = Object.fromEntries(
+            Object.entries(measurementData).map(([key, value]) => [
+              key,
+              value === null ? "" : value,
+            ])
+          );
+
+          console.log(sanitized);
+
           const result = realm.create(Measurement, {
-            ankle_width: measurementData.ankle_width?.toString() ?? "",
-            armhole: measurementData.armhole?.toString() ?? "",
-            bicep: measurementData.bicep?.toString() ?? "",
-            bust: measurementData.bust?.toString() ?? "",
-            bust_point_to_bust_point:
-              measurementData.bust_point_to_bust_point?.toString() ?? "",
-            chest: measurementData.chest?.toString() ?? "",
-            crotch_depth: measurementData.crotch_depth?.toString() ?? "",
-            cuff_width: measurementData.cuff_width?.toString() ?? "",
-            flare_width: measurementData.flare_width?.toString() ?? "",
-            gender: measurementData.gender?.toString() ?? "",
-            hip: measurementData.hip?.toString() ?? "",
-            kameez_back_length:
-              measurementData.kameez_back_length?.toString() ?? "",
-            kameez_front_length:
-              measurementData.kameez_front_length?.toString() ?? "",
-            kameez_length: measurementData.kameez_length?.toString() ?? "",
-            knee: measurementData.knee?.toString() ?? "",
-            neck_circumference:
-              measurementData.neck_circumference?.toString() ?? "",
-            neck_depth_back: measurementData.neck_depth_back?.toString() ?? "",
-            neck_depth_front:
-              measurementData.neck_depth_front?.toString() ?? "",
-            salwar_hip: measurementData.salwar_hip?.toString() ?? "",
-            sleeve_length: measurementData.sleeve_length?.toString() ?? "",
-            salwar_length: measurementData.salwar_length?.toString() ?? "",
-            salwar_waist: measurementData.salwar_waist?.toString() ?? "",
-            shoulder_to_bust_point:
-              measurementData.shoulder_to_bust_point?.toString() ?? "",
-            shoulder_width: measurementData.shoulder_width?.toString() ?? "",
-            side_slit_length:
-              measurementData.side_slit_length?.toString() ?? "",
-            thigh: measurementData.thigh?.toString() ?? "",
-            waist: measurementData.waist?.toString() ?? "",
+            ...sanitized,
             customer: customer, // Link the measurement to the customer object
           });
           customer.measurements.push(result);

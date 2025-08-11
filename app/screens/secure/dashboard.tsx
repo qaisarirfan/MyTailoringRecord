@@ -59,14 +59,14 @@ const Dashboard = () => {
         <Card.Title
           titleVariant="titleMedium"
           title="Customers"
-          subtitle="Card Subtitle"
+          subtitle={`Total Customers: ${currentShop?.customers.length}`}
           left={AddCustomerLeft}
         />
       </Card>
 
       <Divider style={styles.divider} />
 
-      <Card
+      {/* <Card
         mode="contained"
         onPress={() => navigate("AddMeasurement", { customerId: "" })}
       >
@@ -76,7 +76,7 @@ const Dashboard = () => {
           left={AddMeasurementsLeft}
           right={AddMeasurementsRight}
         />
-      </Card>
+      </Card> */}
     </ScrollView>
   );
 };

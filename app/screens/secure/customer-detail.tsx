@@ -1,5 +1,5 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, Divider, Button } from "react-native-paper";
 import { BSON } from "realm";
@@ -9,6 +9,7 @@ import { MeasurementFields } from "../../components/MeasurementForm/types";
 import { useCustomerManager } from "../../hooks/useCustomerManager";
 import { useMeasurementManager } from "../../hooks/useMeasurementManager";
 import { useAppNavigation } from "../../hooks/useNavigation";
+import { Measurement } from "../../models/Measurement";
 
 type ParamList = {
   CustomerDetail: {
@@ -16,7 +17,7 @@ type ParamList = {
   };
 };
 
-const renderMeasurementGrid = (measurement: MeasurementFields) => {
+const renderMeasurementGrid = (measurement: Measurement) => {
   const commonKameezFields = [
     "shoulder_width",
     "neck_circumference",
@@ -34,6 +35,10 @@ const renderMeasurementGrid = (measurement: MeasurementFields) => {
     "kameez_back_length",
     "side_slit_length",
     "flare_width",
+    "collar_size",
+    "shoulder_slope",
+    "cross_back",
+    "elbow",
   ];
 
   const salwarFields = [
@@ -44,12 +49,20 @@ const renderMeasurementGrid = (measurement: MeasurementFields) => {
     "knee",
     "salwar_length",
     "ankle_width",
+    "rise_back",
+    "rise_front",
+    "bottom_opening",
   ];
 
   const femaleOnlyFields = [
     "bust",
+    "under_bust",
     "shoulder_to_bust_point",
     "bust_point_to_bust_point",
+    "dart_length_front",
+    "dart_length_back",
+    "hip_depth",
+    "flare_length",
   ];
 
   const renderGridItems = (fields: string[]) =>
@@ -119,6 +132,7 @@ const CustomerDetail = () => {
             <Text>{customer?.address || "-"}</Text>
           </Card.Content>
         </Card>
+
         {!measurement ? (
           <Button
             icon="tape-measure"
@@ -128,14 +142,35 @@ const CustomerDetail = () => {
             Add Measurement
           </Button>
         ) : (
-          <Button
-            icon="tape-measure"
-            mode="contained"
-            onPress={handleAddMeasurement}
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: 12,
+              justifyContent: "space-between",
+            }}
           >
-            Update Measurement
-          </Button>
+            <Button
+              icon="tape-measure"
+              mode="contained"
+              onPress={handleAddMeasurement}
+            >
+              Update Measurement
+            </Button>
+            <Button
+              mode="contained"
+              onPress={() =>
+                navigation.navigate("AdditionalCustomizationOptions", {
+                  customerId: route.params.customerId,
+                })
+              }
+            >
+              Additional Customization Options
+            </Button>
+          </View>
         )}
+
         {measurement && renderMeasurementGrid(measurement)}
       </ScrollView>
     </View>

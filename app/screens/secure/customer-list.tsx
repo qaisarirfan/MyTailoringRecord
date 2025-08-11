@@ -70,13 +70,14 @@ const CustomerList = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Searchbar
-          placeholder="Search by name or phone"
-          onChangeText={searchCustomers}
-          value={searchTerm}
-          style={styles.search}
-          right={() => (searchTerm ? <SearchRight /> : null)}
-        />
+        {customers.length !== 0 && (
+          <Searchbar
+            placeholder="Search by name or phone"
+            onChangeText={searchCustomers}
+            value={searchTerm}
+            style={styles.search}
+          />
+        )}
 
         {customers.length === 0 ? (
           <Text style={styles.noResults}>No customers found.</Text>

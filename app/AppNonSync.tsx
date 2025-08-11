@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
  */
 export function AppNonSync() {
   return (
-    <PaperProvider theme={{ version: 3 }}>
+    <PaperProvider>
       <SafeAreaView style={styles.screen}>
         <RealmProvider schema={schemas} schemaVersion={1}>
           <Screens />

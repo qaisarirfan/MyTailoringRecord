@@ -5,6 +5,7 @@ import { Shop } from "./Shop";
 
 export class Customer extends Realm.Object {
   _id: BSON.ObjectId = new BSON.ObjectId();
+
   customer_name!: string;
   mobile!: string;
   address?: string;
@@ -12,6 +13,7 @@ export class Customer extends Realm.Object {
   // The 'linkingObjects' property on the 'Shop' model is the inverse relationship.
   shop!: Shop;
   measurements!: Realm.List<Measurement>;
+
   createdAt: Date = new Date();
   updateAt: Date = new Date();
 

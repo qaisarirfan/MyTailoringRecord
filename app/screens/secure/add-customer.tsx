@@ -6,6 +6,7 @@ import { TextInput, Button, HelperText } from "react-native-paper";
 import * as Yup from "yup";
 
 import InputLabel from "../../components/InputLabel";
+import ScreenWrapper from "../../components/ScreenWrapper";
 import { useCustomerManager } from "../../hooks/useCustomerManager";
 import { useAppNavigation } from "../../hooks/useNavigation";
 
@@ -70,60 +71,66 @@ const AddCustomer = () => {
   });
 
   return (
-    <View style={styles.container}>
-      <InputLabel isRequired label="Name" />
-      <TextInput
-        value={formik.values.name}
-        onChangeText={formik.handleChange("name")}
-        onBlur={formik.handleBlur("name")}
-        error={formik.touched.name && !!formik.errors.name}
-        mode="outlined"
-      />
-      <HelperText
-        type="error"
-        visible={formik.touched.name && !!formik.errors.name}
-      >
-        {formik.errors.name}
-      </HelperText>
+    <ScreenWrapper withScrollView contentContainerStyle={{ padding: 16 }}>
+      <View>
+        <InputLabel isRequired label="Name" />
+        <TextInput
+          value={formik.values.name}
+          onChangeText={formik.handleChange("name")}
+          onBlur={formik.handleBlur("name")}
+          error={formik.touched.name && !!formik.errors.name}
+          mode="outlined"
+          placeholder="Type name..."
+        />
+        <HelperText
+          type="error"
+          visible={formik.touched.name && !!formik.errors.name}
+        >
+          {formik.errors.name}
+        </HelperText>
 
-      <InputLabel isRequired label="Mobile" />
-      <TextInput
-        value={formik.values.mobile}
-        onChangeText={formik.handleChange("mobile")}
-        onBlur={formik.handleBlur("mobile")}
-        error={formik.touched.mobile && !!formik.errors.mobile}
-        mode="outlined"
-        keyboardType="phone-pad"
-        placeholder="+923001234567"
-      />
-      <HelperText
-        type="error"
-        visible={formik.touched.mobile && !!formik.errors.mobile}
-      >
-        {formik.errors.mobile}
-      </HelperText>
+        <InputLabel isRequired label="Mobile" />
+        <TextInput
+          value={formik.values.mobile}
+          onChangeText={formik.handleChange("mobile")}
+          onBlur={formik.handleBlur("mobile")}
+          error={formik.touched.mobile && !!formik.errors.mobile}
+          mode="outlined"
+          keyboardType="phone-pad"
+          placeholder="+923001234567"
+        />
+        <HelperText
+          type="error"
+          visible={formik.touched.mobile && !!formik.errors.mobile}
+        >
+          {formik.errors.mobile}
+        </HelperText>
 
-      <InputLabel label="Address" />
-      <TextInput
-        value={formik.values.address}
-        onChangeText={formik.handleChange("address")}
-        onBlur={formik.handleBlur("address")}
-        error={formik.touched.address && !!formik.errors.address}
-        mode="outlined"
-        multiline
-        numberOfLines={3}
-      />
-      <HelperText
-        type="error"
-        visible={formik.touched.address && !!formik.errors.address}
-      >
-        {formik.errors.address}
-      </HelperText>
+        <InputLabel label="Address" />
+        <TextInput
+          value={formik.values.address}
+          onChangeText={formik.handleChange("address")}
+          onBlur={formik.handleBlur("address")}
+          error={formik.touched.address && !!formik.errors.address}
+          mode="outlined"
+          multiline
+          numberOfLines={3}
+          style={{ paddingVertical: 14 }}
+          contentStyle={{ paddingBottom: 0, paddingTop: 0 }}
+          placeholder="Type here..."
+        />
+        <HelperText
+          type="error"
+          visible={formik.touched.address && !!formik.errors.address}
+        >
+          {formik.errors.address}
+        </HelperText>
 
-      <Button mode="contained" onPress={() => formik.handleSubmit()}>
-        Add Customer
-      </Button>
-    </View>
+        <Button mode="contained" onPress={() => formik.handleSubmit()}>
+          Add Customer
+        </Button>
+      </View>
+    </ScreenWrapper>
   );
 };
 

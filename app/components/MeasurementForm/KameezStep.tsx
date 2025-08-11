@@ -42,20 +42,15 @@ const KameezStep: FC<Props> = ({ formik }) => {
         formik,
         "Neck Depth (Front)",
         "neck_depth_front",
-        "e.g., 3.5",
-        true
+        "e.g., 3.5"
       )}
-      {renderInput(
-        formik,
-        "Neck Depth (Back)",
-        "neck_depth_back",
-        "e.g., 1.5",
-        true
-      )}
+      {renderInput(formik, "Collar Size", "collar_size", "e.g., 1.5")}
+      {renderInput(formik, "Neck Depth (Back)", "neck_depth_back", "e.g., 1.5")}
       {renderInput(formik, "Bicep", "bicep", "e.g., 12", true)}
       {renderInput(formik, "Armhole", "armhole", "e.g., 9.5", true)}
       {renderInput(formik, "Sleeve Length", "sleeve_length", "e.g., 24", true)}
-      {renderInput(formik, "Cuff Width", "cuff_width", "e.g., 7", true)}
+      {renderInput(formik, "Cuff Width", "cuff_width", "e.g., 7")}
+      {renderInput(formik, "Elbow", "elbow", "e.g., 7")}
       {renderInput(
         formik,
         formik.values.gender === "female" ? "Bust" : "Chest",
@@ -64,20 +59,30 @@ const KameezStep: FC<Props> = ({ formik }) => {
         true
       )}
       {formik.values.gender === "female" &&
+        renderInput(formik, "Under Bust", "under_bust", "e.g., 30")}
+      {formik.values.gender === "female" &&
+        renderInput(
+          formik,
+          "Dart Length Front",
+          "dart_length_front",
+          "e.g., 30"
+        )}
+      {formik.values.gender === "female" &&
+        renderInput(formik, "Dart Length Back", "dart_length_back", "e.g., 30")}
+
+      {formik.values.gender === "female" &&
         renderInput(
           formik,
           "Shoulder To Bust Point",
           "shoulder_to_bust_point",
-          "e.g., 30",
-          true
+          "e.g., 30"
         )}
       {formik.values.gender === "female" &&
         renderInput(
           formik,
           "Bust Point To Bust Point",
           "bust_point_to_bust_point",
-          "e.g., 30",
-          true
+          "e.g., 30"
         )}
       {renderInput(formik, "Waist", "waist", "e.g., 30", true)}
       {renderInput(formik, "Hip", "hip", "e.g., 38", true)}
@@ -86,19 +91,21 @@ const KameezStep: FC<Props> = ({ formik }) => {
         formik,
         "Kameez Front Length",
         "kameez_front_length",
-        "e.g., 40",
-        true
+        "e.g., 40"
       )}
 
       {renderInput(
         formik,
         "Kameez Back Length",
         "kameez_back_length",
-        "e.g., 40",
-        true
+        "e.g., 40"
       )}
-      {renderInput(formik, "Slit Length", "side_slit_length", "e.g., 12", true)}
+      {renderInput(formik, "Slit Length", "side_slit_length", "e.g., 12")}
       {renderInput(formik, "Flare Width", "flare_width", "e.g., 12")}
+      {formik.values.gender === "female" &&
+        renderInput(formik, "Flare Length", "flare_length", "e.g., 12")}
+      {renderInput(formik, "Cross Back", "cross_back", "e.g., 12")}
+      {renderInput(formik, "Shoulder Slope", "shoulder_slope", "e.g., 12")}
     </View>
   );
 };

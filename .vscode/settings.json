@@ -39,5 +39,36 @@
   "eslint.options": {
     "overrideConfigFile": "./.eslintrc.cjs"
   },
-  "cSpell.words": ["kameez", "salwar"]
+  "cSpell.words": [
+    "angrakha",
+    "Angrakha",
+    "baan",
+    "Baan",
+    "chak",
+    "Chak",
+    "chooridar",
+    "Chooridar",
+    "dori",
+    "gharara",
+    "Gharara",
+    "indo",
+    "kameez",
+    "khusra",
+    "Khusra",
+    "kurta",
+    "Kurta",
+    "kurtas",
+    "paan",
+    "Paan",
+    "pathani",
+    "Pathani",
+    "patiala",
+    "Patiala",
+    "salwar",
+    "sharara",
+    "Sharara",
+    "sherwani",
+    "sherwanis",
+    "streetwear"
+  ]
 }

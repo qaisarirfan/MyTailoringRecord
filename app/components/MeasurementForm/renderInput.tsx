@@ -14,106 +14,165 @@ interface InputConfig {
 // Input configurations with icons and helper text
 const inputConfigs: Record<keyof MeasurementFields, InputConfig> = {
   gender: {
-    icon: "",
-    helperText: "",
+    icon: "account",
+    helperText: "Select gender for accurate measurement requirements",
   },
   shoulder_width: {
-    icon: "human",
-    helperText: "Measure across the back from shoulder to shoulder",
+    icon: "human-male-height",
+    helperText: "Measure across the back from shoulder tip to shoulder tip",
+  },
+  neck_circumference: {
+    icon: "tape-measure",
+    helperText: "Measure around the base of the neck",
+  },
+  neck_depth_front: {
+    icon: "tape-measure",
+    helperText: "Measure vertically from shoulder to desired front neck depth",
+  },
+  neck_depth_back: {
+    icon: "tape-measure",
+    helperText: "Measure vertically from shoulder to desired back neck depth",
   },
   chest: {
     icon: "tshirt-crew",
-    helperText: "Measure around the fullest part of chest",
+    helperText: "Measure around the fullest part of chest (men)",
+  },
+  bust: {
+    icon: "tshirt-crew",
+    helperText: "Measure around the fullest part of the bust (women)",
+  },
+  shoulder_to_bust_point: {
+    icon: "arrow-down",
+    helperText: "Measure vertically from shoulder to bust apex (women)",
+  },
+  bust_point_to_bust_point: {
+    icon: "arrow-left-right",
+    helperText: "Measure horizontally between bust apex points (women)",
   },
   waist: {
-    icon: "human",
+    icon: "tape-measure",
     helperText: "Measure around the natural waistline",
   },
   hip: {
-    icon: "human",
+    icon: "tape-measure",
     helperText: "Measure around the fullest part of hips",
-  },
-  kameez_length: {
-    icon: "ruler",
-    helperText: "Measure from shoulder to desired length",
-  },
-  sleeve_length: {
-    icon: "ruler",
-    helperText: "Measure from shoulder to desired sleeve length",
   },
   armhole: {
     icon: "arm-flex",
-    helperText: "Measure around the arm at shoulder joint",
+    helperText: "Measure around the arm at the shoulder joint",
   },
   bicep: {
     icon: "arm-flex",
     helperText: "Measure around the fullest part of upper arm",
   },
-  neck_depth_front: {
-    icon: "collar",
-    helperText: "Measure from shoulder to desired front neck depth",
-  },
-  neck_depth_back: {
-    icon: "collar",
-    helperText: "Measure from shoulder to desired back neck depth",
-  },
-  side_slit_length: {
+  sleeve_length: {
     icon: "ruler",
-    helperText: "Measure from waist to desired slit length",
+    helperText: "Measure from shoulder tip to desired sleeve length",
   },
-  salwar_waist: {
-    icon: "human",
-    helperText: "Measure around the waist where salwar will sit",
-  },
-  salwar_hip: {
-    icon: "human",
-    helperText: "Measure around the fullest part of hips",
-  },
-  salwar_length: {
-    icon: "ruler",
-    helperText: "Measure from waist to desired length",
-  },
-  thigh: {
-    icon: "human",
-    helperText: "Measure around the fullest part of thigh",
-  },
-  knee: { icon: "human", helperText: "Measure around the knee" },
-  ankle_width: { icon: "human", helperText: "Measure around the ankle" },
   cuff_width: {
     icon: "ruler",
     helperText: "Measure around the wrist for cuff fitting",
   },
-  neck_circumference: {
-    icon: "collar",
-    helperText: "Measure around the base of the neck",
+  elbow: {
+    icon: "ruler",
+    helperText: "Measure around the elbow for fitted sleeve designs",
+  },
+  kameez_length: {
+    icon: "ruler",
+    helperText: "Measure from shoulder to the bottom of the kameez",
+  },
+  kameez_front_length: {
+    icon: "ruler",
+    helperText:
+      "Measure from front shoulder to kameez bottom (for high-low styles)",
   },
   kameez_back_length: {
     icon: "ruler",
     helperText: "Measure from back shoulder to kameez bottom",
   },
-  kameez_front_length: {
+  side_slit_length: {
     icon: "ruler",
-    helperText: "Measure from front shoulder to kameez bottom",
+    helperText: "Measure from bottom of armhole to end of side slit",
   },
-  bust: {
-    icon: "tshirt-crew",
-    helperText: "Measure around the fullest part of the bust",
+  flare_width: {
+    icon: "expand-all",
+    helperText: "Measure the width of the flare at the hem",
   },
-  shoulder_to_bust_point: {
-    icon: "arrow-down",
-    helperText: "Measure vertically from shoulder to bust apex",
+  cross_back: {
+    icon: "human-male-height",
+    helperText: "Measure across the back from armhole to armhole",
   },
-  bust_point_to_bust_point: {
-    icon: "arrow-left-right",
-    helperText: "Measure horizontally between bust apex points",
+  shoulder_slope: {
+    icon: "triangle-outline",
+    helperText: "Measure the slope angle from neck to shoulder tip",
+  },
+  collar_size: {
+    icon: "tape-measure",
+    helperText: "Measure around the neck where collar will sit (men)",
+  },
+
+  // Salwar / Bottoms
+  salwar_waist: {
+    icon: "tape-measure",
+    helperText: "Measure around waist where salwar will sit",
+  },
+  salwar_hip: {
+    icon: "tape-measure",
+    helperText: "Measure around fullest part of hips",
   },
   crotch_depth: {
     icon: "ruler",
     helperText: "Measure from waist to crotch while seated",
   },
-  flare_width: {
-    icon: "expand",
-    helperText: "Measure the hem width of the kameez (if flared)",
+  thigh: {
+    icon: "tape-measure",
+    helperText: "Measure around the fullest part of thigh",
+  },
+  knee: {
+    icon: "tape-measure",
+    helperText: "Measure around the knee",
+  },
+  ankle_width: {
+    icon: "tape-measure",
+    helperText: "Measure around the ankle for bottom opening",
+  },
+  salwar_length: {
+    icon: "ruler",
+    helperText: "Measure from waist to desired salwar length",
+  },
+  bottom_opening: {
+    icon: "tape-measure",
+    helperText: "Measure the width of the leg opening at the bottom",
+  },
+  rise_front: {
+    icon: "ruler",
+    helperText: "Measure from waist front to crotch point",
+  },
+  rise_back: {
+    icon: "ruler",
+    helperText: "Measure from waist back to crotch point",
+  },
+
+  // Women’s special
+  under_bust: {
+    icon: "tape-measure",
+    helperText: "Measure around ribcage just under the bust",
+  },
+  dart_length_front: {
+    icon: "arrow-down",
+    helperText: "Measure from bust apex to dart end (front)",
+  },
+  dart_length_back: {
+    icon: "arrow-down",
+    helperText: "Measure from back shoulder blade to dart end",
+  },
+  hip_depth: {
+    icon: "arrow-down",
+    helperText: "Measure vertically from waist to fullest part of hip",
+  },
+  flare_length: {
+    icon: "ruler",
+    helperText: "Measure length of flare from waist or hip downwards",
   },
 };
 
