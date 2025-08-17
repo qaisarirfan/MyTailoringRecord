@@ -131,7 +131,7 @@ export function useMeasurementManager() {
         [customerId]
       );
 
-      return measurements[0];
+      return measurements;
 
       // Use useMemo to ensure the aggregated history is only recalculated
       // when the underlying Realm data changes.
@@ -168,8 +168,6 @@ export function useMeasurementManager() {
             ])
           );
 
-          console.log(sanitized);
-
           const result = realm.create(Measurement, {
             ...sanitized,
             customer: customer, // Link the measurement to the customer object
@@ -203,12 +201,7 @@ export function useMeasurementManager() {
    * @throws {Error} If the measurement is not found or an error occurs during update.
    */
   const editMeasurement = useCallback(
-    (
-      measurementId: BSON.ObjectId,
-      updatedData: Partial<
-        Omit<Measurement, "_id" | "customer" | "createdAt" | "updateAt">
-      >
-    ) => {
+    (measurementId: BSON.ObjectId, updatedData: Partial<MeasurementFields>) => {
       const measurementToEdit = realm.objectForPrimaryKey(
         Measurement,
         measurementId

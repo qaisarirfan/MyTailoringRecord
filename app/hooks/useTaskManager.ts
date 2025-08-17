@@ -39,8 +39,6 @@ export function useTaskManager(userId = "SYNC_DISABLED") {
     [showCompleted]
   );
 
-  console.log(tasks);
-
   /**
    * Adds a task to the database.
    *

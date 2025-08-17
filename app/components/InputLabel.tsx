@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: "600",
-    color: "#333",
   },
   asterisk: {
     fontSize: 14,

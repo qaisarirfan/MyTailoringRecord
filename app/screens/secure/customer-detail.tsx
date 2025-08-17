@@ -71,10 +71,10 @@ const renderMeasurementGrid = (measurement: Measurement) => {
 
       if (!value) return null;
       return (
-        <View key={key} style={styles.gridItem}>
+        <Card key={key} style={styles.gridItem} mode="outlined">
           <Text style={styles.gridLabel}>{key.replace(/_/g, " ")}</Text>
           <Text style={styles.gridValue}>{value}</Text>
-        </View>
+        </Card>
       );
     });
 
@@ -102,14 +102,14 @@ const CustomerDetail = () => {
   const route = useRoute<RouteProp<ParamList, "CustomerDetail">>();
   const navigation = useAppNavigation();
 
+  const customerId = new BSON.ObjectId(route.params.customerId);
+
   const { getCustomerById } = useCustomerManager();
   const { getMeasurementsForCustomer } = useMeasurementManager();
 
-  const customer = getCustomerById(new BSON.ObjectId(route.params.customerId));
+  const customer = getCustomerById(customerId);
 
-  const measurement = getMeasurementsForCustomer(
-    new BSON.ObjectId(route.params.customerId)
-  );
+  const measurements = getMeasurementsForCustomer(customerId);
 
   const handleAddMeasurement = () => {
     navigation.navigate("AddMeasurement", {
@@ -123,17 +123,19 @@ const CustomerDetail = () => {
         <Card style={styles.card} mode="outlined">
           <Card.Content>
             <InputLabel label="Name" />
-            <Text>{customer?.customer_name || "-"}</Text>
-            <Divider />
+            <Text variant="titleLarge">{customer?.customer_name || "-"}</Text>
+            <Divider style={{ marginBlock: 8 }} />
             <InputLabel label="Mobile" />
-            <Text selectable>{customer?.mobile || "-"}</Text>
-            <Divider />
+            <Text variant="titleLarge" selectable>
+              {customer?.mobile || "-"}
+            </Text>
+            <Divider style={{ marginBlock: 8 }} />
             <InputLabel label="Address" />
-            <Text>{customer?.address || "-"}</Text>
+            <Text variant="titleLarge">{customer?.address || "-"}</Text>
           </Card.Content>
         </Card>
 
-        {!measurement ? (
+        {!measurements.length ? (
           <Button
             icon="tape-measure"
             mode="contained"
@@ -171,7 +173,7 @@ const CustomerDetail = () => {
           </View>
         )}
 
-        {measurement && renderMeasurementGrid(measurement)}
+        {measurements.length > 0 && renderMeasurementGrid(measurements[0])}
       </ScrollView>
     </View>
   );
@@ -184,7 +186,10 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 16,
   },
-  card: { marginBottom: 16 },
+  card: {
+    marginBottom: 16,
+    borderColor: "transparent",
+  },
   section: {},
   gridContainer: {
     flexDirection: "row",
@@ -194,20 +199,19 @@ const styles = StyleSheet.create({
   },
   gridItem: {
     width: "48%",
-    backgroundColor: "#f9f9f9",
     padding: 8,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: "transparent",
   },
   gridLabel: {
     fontSize: 12,
-    color: "#555",
+    marginBottom: 8,
+    textTransform: "capitalize",
   },
   gridValue: {
     fontWeight: "bold",
     fontSize: 14,
-    color: "#000",
   },
   sectionHeader: {
     fontSize: 16,

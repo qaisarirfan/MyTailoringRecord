@@ -15,6 +15,7 @@ import {
   IconButton,
 } from "react-native-paper";
 
+import ScreenWrapper from "../../components/ScreenWrapper";
 import { useCustomerManager } from "../../hooks/useCustomerManager";
 import { useAppNavigation } from "../../hooks/useNavigation";
 import { Customer } from "../../models/Customer";
@@ -68,45 +69,46 @@ const CustomerList = () => {
   }, [navigation]);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        {customers.length !== 0 && (
-          <Searchbar
-            placeholder="Search by name or phone"
-            onChangeText={searchCustomers}
-            value={searchTerm}
-            style={styles.search}
-          />
-        )}
-
-        {customers.length === 0 ? (
-          <Text style={styles.noResults}>No customers found.</Text>
-        ) : (
-          <FlatList
-            data={customers}
-            keyExtractor={(item) => item._id.toHexString()}
-            renderItem={({ item }) => (
-              <RenderItem
-                item={item}
-                onPress={() =>
-                  navigation.navigate("CustomerDetail", {
-                    customerId: item._id.toHexString(),
-                  })
-                }
+    <ScreenWrapper withScrollView={false} style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          {customers.length === 0 ? (
+            <Text style={styles.noResults}>No customers found.</Text>
+          ) : (
+            <>
+              <Searchbar
+                placeholder="Search by name or phone"
+                onChangeText={searchCustomers}
+                value={searchTerm}
+                style={styles.search}
               />
-            )}
-            contentContainerStyle={styles.flatListContent}
-          />
-        )}
-      </View>
-    </TouchableWithoutFeedback>
+              <FlatList
+                data={customers}
+                keyExtractor={(item) => item._id.toHexString()}
+                renderItem={({ item }) => (
+                  <RenderItem
+                    item={item}
+                    onPress={() =>
+                      navigation.navigate("CustomerDetail", {
+                        customerId: item._id.toHexString(),
+                      })
+                    }
+                  />
+                )}
+                contentContainerStyle={styles.flatListContent}
+              />
+            </>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+    </ScreenWrapper>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 12,
+    padding: 16,
   },
   search: {
     marginBottom: 12,

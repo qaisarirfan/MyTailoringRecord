@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
 import { Avatar, Card, IconButton, Divider } from "react-native-paper";
 
+import ScreenWrapper from "../../components/ScreenWrapper";
 import { useAppNavigation } from "../../hooks/useNavigation";
 import { useShopManager } from "../../hooks/useShopManager";
 
@@ -33,10 +34,7 @@ const Dashboard = () => {
   const { navigate } = useAppNavigation();
 
   return (
-    <ScrollView
-      keyboardDismissMode="interactive"
-      contentContainerStyle={styles.scrollView}
-    >
+    <ScreenWrapper withScrollView contentContainerStyle={styles.scrollView}>
       <Card.Title
         titleVariant="displaySmall"
         title={currentShop?.shop_name}
@@ -77,7 +75,7 @@ const Dashboard = () => {
           right={AddMeasurementsRight}
         />
       </Card> */}
-    </ScrollView>
+    </ScreenWrapper>
   );
 };
 

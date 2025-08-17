@@ -1,6 +1,11 @@
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  DefaultTheme,
+  NavigationContainer,
+  DarkTheme,
+} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+import { useColorScheme } from "react-native";
 
 import AddCustomer from "./secure/add-customer";
 import AddMeasurement from "./secure/add-measurement";
@@ -13,11 +18,13 @@ import { useShopManager } from "../hooks/useShopManager";
 import CustomerList from "./secure/customer-list";
 
 export default () => {
+  const scheme = useColorScheme();
+
   const Stack = createNativeStackNavigator();
   const { shopExists } = useShopManager();
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={scheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack.Navigator>
         {!shopExists && (
           <Stack.Screen

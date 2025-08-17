@@ -1,6 +1,6 @@
 import { FormikProps } from "formik";
-import { StyleSheet, View } from "react-native";
-import { HelperText, TextInput } from "react-native-paper";
+import { StyleSheet, View, useColorScheme } from "react-native";
+import { HelperText, TextInput, useTheme } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { MeasurementFields } from "./types";
@@ -182,39 +182,48 @@ const renderInput = (
   name: keyof MeasurementFields,
   placeholder: string,
   isRequired: boolean = false
-) => (
-  <View style={styles.inputContainer}>
-    <InputLabel
-      label={`${label} (inches)`}
-      isRequired={isRequired}
-      style={styles.inputLabel}
-    />
-    <HelperText padding="none" type="info" variant="bodySmall">
-      {inputConfigs[name]?.helperText}
-    </HelperText>
-    <TextInput
-      value={formik.values[name]?.toString()}
-      onChangeText={formik.handleChange(name)}
-      onBlur={formik.handleBlur(name)}
-      keyboardType="numeric"
-      placeholder={placeholder}
-      mode="outlined"
-      style={styles.input}
-      outlineStyle={{ borderWidth: 1 }}
-      error={formik.touched[name] && !!formik.errors[name]}
-      left={
-        <TextInput.Icon
-          icon={() => <Icon name={inputConfigs[name]?.icon} size={20} />}
-        />
-      }
-    />
-    {formik.touched[name] && !!formik.errors[name] && (
-      <HelperText type="error" padding="none">
-        {formik.errors[name]}
+) => {
+  const theme = useTheme();
+  return (
+    <View style={styles.inputContainer}>
+      <InputLabel
+        label={`${label} (inches)`}
+        isRequired={isRequired}
+        style={styles.inputLabel}
+      />
+      <HelperText padding="none" type="info" variant="bodySmall">
+        {inputConfigs[name]?.helperText}
       </HelperText>
-    )}
-  </View>
-);
+      <TextInput
+        value={formik.values[name]?.toString()}
+        onChangeText={formik.handleChange(name)}
+        onBlur={formik.handleBlur(name)}
+        keyboardType="numeric"
+        placeholder={placeholder}
+        mode="outlined"
+        style={styles.input}
+        outlineStyle={{ borderWidth: 1 }}
+        error={formik.touched[name] && !!formik.errors[name]}
+        left={
+          <TextInput.Icon
+            icon={() => (
+              <Icon
+                name={inputConfigs[name]?.icon}
+                size={20}
+                color={theme.colors.primary}
+              />
+            )}
+          />
+        }
+      />
+      {formik.touched[name] && !!formik.errors[name] && (
+        <HelperText type="error" padding="none">
+          {formik.errors[name]}
+        </HelperText>
+      )}
+    </View>
+  );
+};
 
 export default renderInput;
 

@@ -11,6 +11,7 @@ import {
 import * as Yup from "yup";
 
 import InputLabel from "../../components/InputLabel";
+import ScreenWrapper from "../../components/ScreenWrapper";
 import { useShopManager } from "../../hooks/useShopManager";
 
 const phoneUtil = PhoneNumberUtil.getInstance();
@@ -89,7 +90,7 @@ const RegisterShop: React.FC = () => {
   } = formik;
 
   return (
-    <ScrollView style={styles.container}>
+    <ScreenWrapper withScrollView contentContainerStyle={styles.content}>
       <View style={styles.content}>
         <InputLabel isRequired label="Shop Name" />
         <TextInput
@@ -171,7 +172,7 @@ const RegisterShop: React.FC = () => {
           Register Shop
         </Button>
       </View>
-    </ScrollView>
+    </ScreenWrapper>
   );
 };
 

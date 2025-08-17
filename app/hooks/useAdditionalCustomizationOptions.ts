@@ -39,8 +39,7 @@ export function useAdditionalCustomizationOptions(
   // 🔍 Query filtered by measurement ID if provided
   const options = useQuery(AdditionalCustomizationOptions, (coll) =>
     measurementId ? coll.filtered("measurement._id == $0", measurementId) : coll
-  );
-
+  ).sorted("createdAt", true);
   // ➕ Create
   const createOption = useCallback(
     (data: AdditionalCustomizationOptionsInput) => {

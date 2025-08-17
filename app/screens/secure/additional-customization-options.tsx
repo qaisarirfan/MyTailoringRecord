@@ -1,6 +1,6 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Switch } from "react-native";
 import { Button, List } from "react-native-paper";
 import { BSON } from "realm";
@@ -69,22 +69,25 @@ const AdditionalCustomizationOptions = () => {
     useRoute<RouteProp<ParamList, "AdditionalCustomizationOptions">>();
   const { navigate } = useAppNavigation();
 
+  const customerId = new BSON.ObjectId(route.params.customerId);
+
   const { getCustomerById } = useCustomerManager();
   const { getMeasurementsForCustomer } = useMeasurementManager();
 
-  const customer = getCustomerById(new BSON.ObjectId(route.params.customerId));
+  const customer = getCustomerById(customerId);
 
-  const measurement = getMeasurementsForCustomer(
-    new BSON.ObjectId(route.params.customerId)
-  );
+  const measurements = getMeasurementsForCustomer(customerId);
 
-  const { createOption } = useAdditionalCustomizationOptions(measurement._id);
+  const [first] = measurements;
+
+  const { createOption, updateOption, options } =
+    useAdditionalCustomizationOptions(first._id);
 
   const formik = useFormik<AdditionalCustomizationOptionsValues>({
     initialValues: {
       double: false,
       design: false,
-      front_pocket: measurement.gender === "male" ? true : false,
+      front_pocket: first.gender === "male" ? true : false,
       zip_hip: false,
       qaf: false,
       round_arm: false,
@@ -99,54 +102,82 @@ const AdditionalCustomizationOptions = () => {
       lace_trim: false,
       tassel_detail: false,
 
-      neckline_type:
-        measurement.gender === "male" ? "collar_gala" : "boat_neck",
-      salwar_type:
-        measurement.gender === "male" ? "simple_salwar" : "classic_salwar",
+      neckline_type: first.gender === "male" ? "collar_gala" : "boat_neck",
+      salwar_type: first.gender === "male" ? "simple_salwar" : "classic_salwar",
       buttons_type: "simple_button",
       kameez_pocket_options:
-        measurement.gender === "male" ? "one_pocket" : "no_pocket",
+        first.gender === "male" ? "one_pocket" : "no_pocket",
       salwar_pocket_options: "no_pocket",
     },
     validationSchema,
-    onSubmit: (values, formikHelpers) => {
+    onSubmit: (values) => {
       try {
-        createOption(values);
-        formikHelpers.resetForm();
+        if (options.length) {
+          const [first] = options;
+          updateOption(first._id, values);
+        } else {
+          createOption(values);
+        }
         navigate("CustomerDetail", { customerId: route.params.customerId });
       } catch (error) {}
     },
     enableReinitialize: true,
   });
 
-  const handleToggle = (key: string) => {
-    formik.setFieldValue(
-      key,
-      !formik.values[key as keyof AdditionalCustomizationOptionsValues]
-    );
+  useEffect(() => {
+    const [first] = options;
+
+    if (first) {
+      formik.setValues({
+        double: first.double,
+        design: first.design,
+        front_pocket: first.front_pocket,
+        zip_hip: first.zip_hip,
+        qaf: first.qaf,
+        round_arm: first.round_arm,
+        stud: first.stud,
+        chak_strip: first.chak_strip,
+        trouser_pocket: first.trouser_pocket,
+        silk_thread: first.silk_thread,
+        contrast_piping: first.contrast_piping,
+        shoulder_epaulette: first.shoulder_epaulette,
+
+        net_insert: first.net_insert,
+        lace_trim: first.lace_trim,
+        tassel_detail: first.tassel_detail,
+
+        neckline_type: first.neckline_type,
+        salwar_type: first.salwar_type,
+        buttons_type: first.buttons_type,
+        kameez_pocket_options: first.kameez_pocket_options,
+        salwar_pocket_options: first.salwar_pocket_options,
+      });
+    }
+  }, []);
+
+  const handleToggle = (key: keyof AdditionalCustomizationOptionsValues) => {
+    formik.setFieldValue(key, !formik.values[key]);
   };
 
   const CUSTOMIZATIONS =
-    measurement.gender === "male" ? MEN_CUSTOMIZATIONS : WOMEN_CUSTOMIZATIONS;
+    first.gender === "male" ? MEN_CUSTOMIZATIONS : WOMEN_CUSTOMIZATIONS;
 
   const NECKLINE_OPTIONS =
-    measurement.gender === "male"
-      ? NECKLINE_OPTIONS_MEN
-      : NECKLINE_OPTIONS_WOMEN;
+    first.gender === "male" ? NECKLINE_OPTIONS_MEN : NECKLINE_OPTIONS_WOMEN;
 
   const SALWAR_OPTIONS =
-    measurement.gender === "male" ? SALWAR_OPTIONS_MEN : SALWAR_OPTIONS_WOMEN;
+    first.gender === "male" ? SALWAR_OPTIONS_MEN : SALWAR_OPTIONS_WOMEN;
 
   const BUTTON_OPTIONS =
-    measurement.gender === "male" ? MEN_BUTTON_OPTIONS : WOMEN_BUTTON_OPTIONS;
+    first.gender === "male" ? MEN_BUTTON_OPTIONS : WOMEN_BUTTON_OPTIONS;
 
   const KAMEEZ_POCKET_OPTIONS =
-    measurement.gender === "male"
+    first.gender === "male"
       ? MEN_KAMEEZ_POCKET_OPTIONS
       : WOMEN_KAMEEZ_POCKET_OPTIONS;
 
   const BOTTOM_POCKET_OPTIONS =
-    measurement.gender === "male"
+    first.gender === "male"
       ? MEN_BOTTOM_POCKET_OPTIONS
       : WOMEN_BOTTOM_POCKET_OPTIONS;
 
@@ -161,7 +192,9 @@ const AdditionalCustomizationOptions = () => {
           descriptionNumberOfLines={0}
           right={() => (
             <Switch
-              onChange={() => handleToggle(key)}
+              onChange={() =>
+                handleToggle(key as keyof AdditionalCustomizationOptionsValues)
+              }
               value={Boolean(
                 formik.values[key as keyof AdditionalCustomizationOptionsValues]
               )}
@@ -175,7 +208,9 @@ const AdditionalCustomizationOptions = () => {
             marginVertical: 0,
             alignItems: "center",
           }}
-          onPress={() => handleToggle(key)}
+          onPress={() =>
+            handleToggle(key as keyof AdditionalCustomizationOptionsValues)
+          }
         />
       ))}
 
