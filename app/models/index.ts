@@ -18,14 +18,16 @@
 
 import { AdditionalCustomizationOptions } from "./AdditionalCustomizationOptions";
 import { Customer } from "./Customer";
+import { DeliverySchedule } from "./DeliverySchedule";
 import { Measurement } from "./Measurement";
 import { Shop } from "./Shop";
 
 // If you have multiple data models, you can export all of them in a
 // list as a convenience when providing the schema when opening a Realm.
 export const schemas = [
-  Shop,
-  Customer,
-  Measurement,
   AdditionalCustomizationOptions,
+  Customer,
+  DeliverySchedule,
+  Measurement,
+  Shop,
 ];

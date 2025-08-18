@@ -1,18 +1,25 @@
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 
+
 export type RootStackParamList = {
-  AddCustomer: undefined;
-  AddMeasurement: { customerId: string };
-  CustomerDetail: { customerId: string };
-  CustomerList: undefined;
   Dashboard: undefined;
-  Measurements: undefined;
-  RegisterShop: undefined;
+  CustomerList: undefined;
+  AddCustomer: undefined;
   ShopType: undefined;
-  AdditionalCustomizationOptions: { customerId: string };
+  RegisterShop: undefined;
+  CustomerStack: { customerId: string }; // pass down into nested stack
 };
 
-export type RootStackNavigationProp = NavigationProp<RootStackParamList>;
+export type CustomerStackParamList = {
+  CustomerDetail: { customerId: string };
+  AddMeasurement: { customerId: string };
+  AdditionalCustomizationOptions: { customerId: string };
+  DeliveryScheduling: { customerId: string };
+};
+
+export type RootStackNavigationProp = NavigationProp<
+  RootStackParamList & CustomerStackParamList
+>;
 
 export function useAppNavigation() {
   return useNavigation<RootStackNavigationProp>();

@@ -8,19 +8,18 @@ import React from "react";
 import { useColorScheme } from "react-native";
 
 import AddCustomer from "./secure/add-customer";
-import AddMeasurement from "./secure/add-measurement";
-import AdditionalCustomizationOptions from "./secure/additional-customization-options";
-import CustomerDetail from "./secure/customer-detail";
 import Dashboard from "./secure/dashboard";
 import RegisterShop from "./secure/register-shop";
 import ShopType from "./secure/shop-type";
 import { useShopManager } from "../hooks/useShopManager";
 import CustomerList from "./secure/customer-list";
+import CustomerStack from "../navigation/CustomerStack";
+import { RootStackParamList } from "../hooks/useNavigation";
 
 export default () => {
   const scheme = useColorScheme();
 
-  const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator<RootStackParamList>();
   const { shopExists } = useShopManager();
 
   return (
@@ -41,29 +40,20 @@ export default () => {
           options={{ title: "Customers" }}
         />
         <Stack.Screen
-          name="ShopType"
-          component={ShopType}
-          options={{ title: "Shop Type" }}
-        />
-        <Stack.Screen
-          name="AddMeasurement"
-          component={AddMeasurement}
-          options={{ title: "Measurement" }}
-        />
-        <Stack.Screen
           name="AddCustomer"
           component={AddCustomer}
           options={{ title: "Add New Customer" }}
         />
         <Stack.Screen
-          name="CustomerDetail"
-          component={CustomerDetail}
-          options={{ title: "Customer" }}
+          name="ShopType"
+          component={ShopType}
+          options={{ title: "Shop Type" }}
         />
+
         <Stack.Screen
-          name="AdditionalCustomizationOptions"
-          component={AdditionalCustomizationOptions}
-          options={{ title: "Additional Customization Options" }}
+          name="CustomerStack"
+          component={CustomerStack}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

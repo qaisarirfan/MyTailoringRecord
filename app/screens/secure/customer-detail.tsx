@@ -101,6 +101,7 @@ const renderMeasurementGrid = (measurement: Measurement) => {
 const CustomerDetail = () => {
   const route = useRoute<RouteProp<ParamList, "CustomerDetail">>();
   const navigation = useAppNavigation();
+  const [open, setOpen] = React.useState(false);
 
   const customerId = new BSON.ObjectId(route.params.customerId);
 
@@ -134,7 +135,6 @@ const CustomerDetail = () => {
             <Text variant="titleLarge">{customer?.address || "-"}</Text>
           </Card.Content>
         </Card>
-
         {!measurements.length ? (
           <Button
             icon="tape-measure"
@@ -170,9 +170,18 @@ const CustomerDetail = () => {
             >
               Additional Customization Options
             </Button>
+            <Button
+              mode="contained"
+              onPress={() =>
+                navigation.navigate("DeliveryScheduling", {
+                  customerId: route.params.customerId,
+                })
+              }
+            >
+              Delivery Scheduling
+            </Button>
           </View>
         )}
-
         {measurements.length > 0 && renderMeasurementGrid(measurements[0])}
       </ScrollView>
     </View>
@@ -195,10 +204,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 8,
-    marginBottom: 16,
   },
   gridItem: {
-    width: "48%",
+    width: "31.8%",
     padding: 8,
     borderRadius: 6,
     borderWidth: 1,

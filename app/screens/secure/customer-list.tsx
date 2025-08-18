@@ -89,7 +89,7 @@ const CustomerList = () => {
                   <RenderItem
                     item={item}
                     onPress={() =>
-                      navigation.navigate("CustomerDetail", {
+                      navigation.navigate("CustomerStack", {
                         customerId: item._id.toHexString(),
                       })
                     }
